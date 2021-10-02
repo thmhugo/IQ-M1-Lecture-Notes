@@ -1,0 +1,491 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{ graphicx }
+\graphicspath{ {img/} }
+\usepackage{ geometry}
+\geometry{legalpaper, margin=1.3in}
+\usepackage{ bbm }
+\usepackage{ braket }
+\usepackage{ mathrsfs }
+\usepackage{ amssymb }
+\usepackage{ mathtools }
+\usepackage{ amsfonts }
+\usepackage{ caption }
+\usepackage{ enumitem } % Lists bullet
+\usepackage{ tikz }
+
+\usetikzlibrary{ quantikz }
+
+\newcommand\eqdef{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily def}}}{=}}}
+\newcommand\eqgoal{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily goal}}}{=}}}
+
+\title{qk4cs}
+\author{}
+\date{2021/2022}
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+
+\textsc{\LARGE Sorbonne Universite} \\[1cm]
+\textsc{\LARGE Master 1 - Quantum Information} \\[1cm]
+\textsc{\Large 2021/2022} \\[7cm]
+
+
+{\huge \bfseries Lecture notes} \\[0.5cm]
+{\huge \bfseries -} \\[0.5cm]
+{\huge \bfseries Quantum Kinematic} \\[4cm]
+\vfill
+\includegraphics[scale=0.6]{su.png}
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+Physical system which has $d \in \mathbbm{N}$ possible distinguishable states.
+Its physical state $\ket{\psi} \in \mathscr{H}$, the Hilbert space $\mathbbm{C}^d$.
+
+\begin{equation}
+    \ket{\psi} = \begin{bmatrix} \psi_1\\ \psi_2 \\ \vdots \\ \psi_d\end{bmatrix}
+    \text{ and } \forall i, \psi_i \in \mathbbm{C}.
+\end{equation}
+
+
+\noindent
+The result of the measurement in the computational basis on
+$\ket{\psi}$
+ is $i \in [1, \cdots, d]$ with probability $|\psi_i|^2$.
+ \\ \noindent
+And $\sum_{i=1}^d |\psi_i|^2 = \braket{\psi|\psi} = 1$: the state is normalized.
+
+\subsection{Dirac notation}
+
+\begin{itemize}[label=-]
+
+\item Ket:
+\begin{equation}
+\ket{\psi} = \begin{bmatrix} \psi_1\\ \vdots \\ \psi_d\end{bmatrix} = \psi_1 \ket{1} + \cdots + \psi_d\ket{d} = \sum_{i=1}^d \psi_i\ket{i}
+\end{equation}
+\item Bra:
+\begin{equation}
+\bra{\psi} = \ket{\psi}^\dagger = \ket{\psi^*}^T
+\end{equation}
+\item Braket:
+\begin{equation}
+\braket{\psi|\phi}
+= \begin{bmatrix} \psi_1^* \cdots \psi_d^*\end{bmatrix} \begin{bmatrix} \phi_1\\ \vdots \\ \phi_d\end{bmatrix}
+= \psi_1^*\phi_1 + \cdots + \psi_d^*\phi_d
+\end{equation}
+$\braket{\psi|\phi} $ is the hermitian product of $\psi$ and $\phi$.
+\end{itemize}
+
+\subsection{Measurement in a basis $B$}
+$B$ is an orthonormal basis : $B = \{\ket{b_i}\}_{i=1}^d$ and $\forall i \braket{b_i|b_i} = \delta_{i, j}$.
+
+\begin{figure}[h]
+\centering
+\begin{quantikz}
+    \lstick{$\ket{\psi}$} & \qw & \meter{$B$} & \qw \arrow[r]
+    & \rstick{$i$} \qw
+\end{quantikz}
+\caption{Circuit representation of the measurement of the state $\psi$}
+\end{figure}
+
+\noindent
+The probability of the output of a measurement is given by the following formula :
+\begin{equation}
+    \mathbbm{P}(out=\ket{b_i}) = |\braket{b_i|\psi}|^2
+\end{equation}
+The physical object is projected into the state $\ket{b_i}$, the is physically called the "wave packet reduction".
+
+\subsubsection{Qubit}
+\begin{equation}
+    \ket{0}= \begin{bmatrix} 1 \\ 0 \end{bmatrix}
+    \hspace{1.2in}
+    \ket{1}= \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+\end{equation}
+\begin{equation}
+    \ket{+} = \frac{1}{\sqrt2}(|0\rangle + |1\rangle)
+    \hspace{0.7in}
+    \ket{-}= \frac{1}{\sqrt2}(|0\rangle - |1\rangle)
+\end{equation}
+
+\subsubsection{Measurement in the basis $\{\ket{\pm}\}$}
+\begin{figure}[h]
+\centering
+\begin{quantikz}
+    \lstick{$\ket{0}$} & \qw & \meter{$\pm$} & \qw \arrow[r]
+    & \rstick{$
+        \begin{cases}
+            +, & \text{w.p. $|\braket{+|0}|^2=\frac{1}{2}$}\\
+            -, & \text{w.p. $|\braket{-|0}|^2=\frac{1}{2}$}
+        \end{cases}$} \qw
+\end{quantikz}
+\caption{Measure of the state $\ket{0}$ in the basis $\ket{\pm}$}
+\end{figure}
+
+\subsection{Wiesner's Quantum Money}
+Based on the conjugate coding.
+
+\begin{itemize}
+    \item \texttt{bills}:
+    \begin{itemize}
+        \item serial number
+        \item a set of random qubit $E_r \in \{\ket{0}, \ket{1}, \ket{+}, \ket{-}\}^n$
+        \item \texttt{mint} knows $\{\text{Serial Number}+\text{Random}\}$, sends it to the bank.
+    \end{itemize}
+    \item \texttt{Mint}: makes the bill, and gives it to the forger.
+    \item \texttt{Forger}: tries to copy the bill, and spends the two to the bank.
+    \item \texttt{Bank}: should accept the true one, reject the fake.
+\end{itemize}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c|c}
+    \texttt{mint} & \texttt{forger} basis & \texttt{forger} m. & \texttt{bank} m. \\
+    $\ket{0}$ & $\{\ket{0}, \ket{1}\}$ & $\ket{0}$ & $\ket{0} $\\
+    $\ket{0}$ & $\{\ket{\pm}\}$ &
+    $\begin{cases}
+        \ket{+}, & \text{w.p. $\frac{1}{2}$}\\
+        \ket{-}, & \text{w.p. $\frac{1}{2}$}
+    \end{cases}$ &
+    $\begin{cases}
+        \ket{0}, & \text{w.p. $\frac{1}{2}$}\\
+        \ket{1}, & \text{w.p. $\frac{1}{2}$}
+    \end{cases}$
+    \end{tabular}
+\end{table}
+
+We therefore deduce that
+\begin{equation}
+\mathbbm{P}(\text{get caugth})= 1-(1-\frac{1}{4})^n = 1-(\frac{1}{4})^n
+\end{equation}
+
+\subsection{Bennett and Brassard Quantum Key Exchange: BB84}
+Goal: Alice and Bob $\rightarrow$ share a secret bit string , Eve does not know anything.
+\\
+Setting: Alice and Bob share a quantum channel and an authenticated classical channel.
+\\\noindent
+Steps:
+\begin{enumerate}
+    \item Alice prepares $n$ qubits $E_r \in \{\ket{0}, \ket{1}, \ket{+}, \ket{-}\}^n$, and she sends them to Bob
+    \item Bob receives . He measure them in the basis $\{B_{0,1}, B_{+,-}\}$
+    \item They use the public classical channel to compare the basis Bob used. They throw away the \textit{bad basis} qubits.
+    \item Alice and Bob sample the data and compare the error rate $e$. If $e=0$, they keep the key;
+        if $e = 25$, Eve kowns the key.
+\end{enumerate}
+What if $0 < e < 25$ ? Eve knows a part of the key.
+\section{Unitary transformation}
+A transformation is an isolated system, and it is reversible. \\
+Let $T$ to be a transformation.
+\begin{equation}
+    \braket{T(\ket{\psi})|T(\ket{\psi})}=\braket{\psi|\psi}
+\end{equation}
+$T$ is linear.
+\begin{equation}
+    T(\alpha\ket{\psi} + \beta\ket{\phi}) = \alpha T(\ket{\psi}) + \beta T(\ket{\phi})
+\end{equation}
+
+$T$ acts like an unitary operator.
+$T$ corresponds to a complex matrix $U$: $T(\ket{\phi}) = U\ket{\phi}$, $U \in \mathbbm{C}^{n \times n}$,
+such that $U^\dagger U= Id$.
+
+In the basis $\{\ket{i}\}_{i=0}^n$,$\braket{T(\ket{\psi})|T(\ket{\psi})} = \braket{i|j} = \delta_{i,j}$
+%TODO : add the proof
+\\
+\\
+We have :
+\begin{itemize}[label=-]
+    \item measurement in computational basis
+    \item a machine making arbitrary unitary $U$
+\end{itemize}
+Let's build a measurement in basis $\{\ket{b_i}\}_i$
+
+\begin{figure}[h]
+    \centering
+    \begin{quantikz}
+        \lstick{$\ket{\psi}$} & \qw & \gate{U} & \phase{U\ket{\psi}}&\meter{} & \qw \arrow[r]
+        & \rstick{$i$} \qw
+    \end{quantikz}
+    \caption{Circuit representation of the measurement unitary exptected behavior}
+\end{figure}
+\begin{equation}
+    \mathbbm{P}(i) \eqdef |\braket{i|U|\psi}|^2 \eqgoal |\braket{b_i|\psi}|^2 \quad \forall \psi
+\end{equation}
+
+We want $\bra{i}U=\bra{b_i} \Leftrightarrow U^\dagger\ket{i} = \ket{b_i} \Leftrightarrow U = \sum_i \ket{i}\bra{b_i}$
+% TODO : add the proof
+
+Is $U$ an unitary ?
+
+\begin{equation}
+    \begin{aligned}
+        U^\dagger U &= \Big(\sum_i \ket{b_i}\bra{i}\Big)\Big(\sum_j\ket{j}\bra{b_j}\Big) \\
+        &= \sum_{i, j}\ket{b_i}\braket{i|j}\bra{b_j} \\
+        &= \sum_i \ket{b_i}\bra{b_i} \\
+        &= Id & U \text{ is an unitary. }
+    \end{aligned}
+\end{equation}
+
+\section{Composition of systems}
+Let $A \in \mathscr{H}_A = \mathbbm{C}^{d_A}$ and $B \in \mathscr{H}_B = \mathbbm{C}^{d_B}$
+to be two systems in their respective vector spaces.
+Then we can construct the space $\mathscr{H}_{AB} = \mathscr{H}_A \otimes \mathscr{H}_B$, its basis is
+$\{\ket{ij}_{AB}\}_{i, j}$, and dim($\mathscr{H}_{AB}$) = $d_A \times d_B$
+\\\noindent
+If $\ket{\alpha} = \sum_i\alpha_i\ket{i}_A$ and $\ket{\beta} = \sum_i\beta_i\ket{i}_B$,
+then $\ket{\phi}_{AB}=\ket{\alpha} \otimes \ket{\beta} = \sum_{i,j}\alpha_i\beta_j\ket{i}_A\ket{j}_B$,
+and $\ket{\phi}_{AB} \in \mathscr{H}_{AB}$.
+\\\noindent
+$\ket{\phi}_{AB}$ is a joint state of systems $A$ and $B$.
+\\ \\\noindent
+Not all states of $\mathscr{H}_{AB}$ are separables into one state of $\mathscr{H}_{A}$ and one state of $\mathscr{H}_{B}$
+
+For example : $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11}) \ \mathscr{H}_{AB}$, but
+$\nexists \ket{\alpha}\in \mathscr{H}_A, \ket{\beta}\in \mathscr{H}_B$, such that \\\noindent
+$\ket{\alpha}\otimes\ket{\beta} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$.
+
+%TODO : add the part about the partial measurement
+\subsection{No cloning theorem}
+\subsubsection*{The no cloning theorem}
+\begin{equation}
+    \text{There is no } U \text{ such that } \forall \ket{\psi} \in \mathscr{H}, U\ket{\psi} = \ket{\psi} \otimes \ket{\psi}
+    \in \mathscr{H} \otimes \mathscr{H}.
+\end{equation}
+\subsubsection*{Proof}
+Suppose there exists a such unitary U, then U in a cloning operator.
+\begin{equation}
+    \begin{aligned}
+        U\ket{0} \eqdef \ket{0}\ket{0} \\
+        U\ket{1} \eqdef \ket{1}\ket{1}
+    \end{aligned}
+\end{equation}
+
+By computing the application of $U$ on the state $\ket{+}$, we get on the one hand, by linearity of unitaries
+\begin{equation}
+    U(\frac{\ket{0}+\ket{1}}{\sqrt{2}}) = \frac{\ket{00}+\ket{11}}{\sqrt{2}}
+\end{equation}
+
+and on the other hand, by definition of the operator behavior
+\begin{equation}
+    U(\frac{\ket{0}+\ket{1}}{\sqrt{2}}) = \frac{\ket{0}+\ket{1}}{\sqrt{2}} \otimes \frac{\ket{0}+\ket{1}}{\sqrt{2}}
+    =\frac{1}{2}(\ket{00}+\ket{01}+\ket{10}+\ket{11})
+\end{equation}
+
+which is a contradiction. Then such a $U$ operator can not exist.
+\section{Measurements}
+\subsection{Projective measurement}
+A projective measurement is described by an observable, a Hermitian operator. They are defined by a set of projectors $\{\Pi_j\}_{j=1}^k, k \leq d$.\\
+Projectors properties:
+\begin{equation}
+    \forall j, \Pi_j^2 = \Pi_j \qquad \Pi_j\Pi_i = \delta_{i,j}\Pi_j
+\end{equation}
+\\\noindent
+A projector is defined as follows:
+\begin{equation}
+    \Pi_j = \sum_{l=1}^{d_j}\ket{l_l^j}\bra{l_l^j}
+\end{equation}
+Upon measuring the state $\ket{\psi}$, the probability of getting result $j$ us given by
+\begin{equation}
+    \braket{\psi|\Pi_j|\psi} = \| \Pi_j\ket{\psi}\|^2
+\end{equation}
+Given that outcome $j$ occured, the state of the quantum system immediately after the measurement is
+\begin{equation}
+    \frac{\Pi_j\ket{\psi}}{\| \Pi_j\ket{\psi}\|^2}
+\end{equation}
+
+\subsection{Observables}
+Observables correspond to physical quantities, with values in $\mathbbm{R}$.
+They are well defined in a basis $\{\ket{b_i}\}_i$ (i.e $\forall \ket{b_i}, \exists a_i \in \mathbbm{R})$
+
+\paragraph{Note :} $\alpha\ket{b_1} + \beta\ket{b_2}$ has \textbf{not always} a well defined value.
+
+An observable is defined as follow:
+\begin{equation}
+    O \eqdef \sum_i o_i \underbrace{\ket{b_i}\bra{b_i}}_{\text{projector on $\ket{b_i}$}}
+    = \sum_j o_j \Pi_j
+\end{equation}
+$O$ is diagonalizable by definition and $O^\dagger = O$: $O$ is hermitian.
+$$
+\text{Shape of $O$ } :
+\begin{pmatrix}
+    o_1 & 0 & \cdots & 0 \\
+    0 & o_2 & \cdots & \vdots \\
+    \vdots  & \vdots  & \ddots & \vdots  \\
+    0 & \cdots & \cdots & a_d
+\end{pmatrix}
+$$
+
+The probability of getting the result $i$ by measuring $O$ on a state $\ket{\psi}$ is $\braket{\psi|\Pi_i|\psi}$
+\subsubsection*{Average value of an observable}
+
+The average value of t of $O$, written $\langle O\rangle$, is by definition given by
+\begin{equation}
+    \begin{aligned}
+        \langle O\rangle
+            & = \sum_i o_i \mathbbm{P}(i\ket{\psi}) \\
+            & = \sum_i o_i \|\Pi_i\ket{\psi}\|^2 \\
+            & = \sum_i o_i \braket{\psi|\Pi_i|\psi} \\
+            & = \bra{\psi}\sum_i o_i \Pi_i \ket{\psi} \\
+            & = \braket{\psi | O |\psi}
+    \end{aligned}
+\end{equation}
+
+From this formula for the averag follows a formula for the standard deviation associated to the observation of $O$
+\begin{equation}
+    \Delta^2 O = \langle(O - \langle O \rangle)^2\rangle = \langle O^2 \rangle - \langle O \rangle^2
+\end{equation}
+
+\subsubsection*{Example}
+Using the Pauli matrix $\sigma_x = X =
+    \begin{bmatrix}
+    0 & 1 \\
+    1 & 0
+    \end{bmatrix}
+    = \ket{+}\bra{+} - \ket{-}\bra{-}
+    $.
+\\\noindent
+Known results : $X\ket{+} = \ket{+}$ and $X\ket{-}=-\ket{-}$.
+\\\noindent
+We define $\ket{\theta}:=\cos\omega\ket{0}+\sin\omega\ket{1}$
+\\\noindent
+Then
+\begin{equation}
+    \begin{aligned}
+        \langle X \rangle_{\ket{\theta}}
+            & = \braket{\theta | X |\theta} \\
+            & = [\cos \theta \sin \theta]
+                \begin{bmatrix}0 & 1 \\ 1 & 0 \end{bmatrix}
+                \begin{bmatrix} \cos \theta\\ sin \theta \end{bmatrix} \\
+            & = 2 \sin\theta\cos\theta \\
+            & = sin 2\theta
+    \end{aligned}
+\end{equation}
+
+
+\subsection{Generalized measurements}
+A generalized measurement is defined by
+\begin{equation}
+    \{K_i\}_i \text{ such that } \sum_i K_i^\dagger K_i=Id
+\end{equation}
+where the $K_i$ are called Kraus Operators.
+The probability of getting the result $i$ from a general measurement operator is given by
+$\mathbbm{P}(i) = \|K_i\ket{\psi}\|^2$
+, and the state of the system just after the measurement is $K_i\ket{\psi}=\frac{K_i\ket{\psi}}{\|K_i\ket{\psi}\|^2}$
+
+\subsubsection*{Generalized measurement $\rightarrow$ Operator}
+If $i \in \{1\}$ then
+$K_1^\dagger K_1=Id \Rightarrow K_1$ is unitary.%FIXME: not sure of that.
+
+\subsubsection*{Generalized measurement $\rightarrow$ Set of projectors}
+If $K_i := \Pi_i$ then $\sum_i K_i^\dagger K_i = \sum_i \Pi_i^\dagger\Pi_i = \sum_i \Pi_i = Id$
+
+\subsubsection*{Example}
+With prob. $P_j$, I measure $\{\Pi_{ij}\}_i \text{ } (\sum_i \Pi_{ij} = Id)$ and I measure $U_j$ on the output state.
+%TODO : add the scheme
+Probability of getting $ij$ :
+\begin{equation}
+    \begin{aligned}
+        \mathbbm{P}(ij)
+            &= P_j\braket{\psi | \Pi_{ij} U^\dagger U \Pi_{ij} | \psi} \\
+            &= P_j\braket{\psi|\Pi_{ij}|\psi}
+    \end{aligned}
+\end{equation}
+\noindent
+And the resulting state is $\dfrac{U\Pi_{ij}\ket{\psi}}{\|\Pi_{ij}\ket{\psi}\|^2}$
+
+\noindent
+Let $\{K_{ij} =\sqrt{P_j} U \Pi_{ij}\}_{ij}$, then
+\begin{equation}
+    \begin{aligned}
+        \sum_{ij} K_{ij}^\dagger K_{ij}
+            & = \sum_{ij} P_j \Pi_{ij} U^\dagger U \Pi_{ij} \\
+            & = \sum_j P_j \sum_i \Pi_{ij} \\
+            & = \sum_j P_j \\
+            & = Id
+    \end{aligned}
+\end{equation}
+\noindent
+Can we associate each set $\{K_i\}_i$ with a $U$ and a $\{\Pi_i\}_i$ ?
+\begin{figure}[h]
+    \centering
+\begin{quantikz}
+        \lstick{$\ket{\psi}_I$}
+        & \qw \gategroup[2,steps=5,style={dashed,rounded corners,fill=blue!20, inner xsep=2pt},background]{{\sc $\{K_i\}_i$}}
+        & \qw
+        & \qw
+        & \gate[2]{U}
+        & \qw\arrow[r]
+        &
+        & \text{ouput $o$}
+        \\
+        &
+        &
+        & \lstick{   $\ket{0}_A$}
+        & \qw
+        & \meter{M$\{\ket{i}\}$}
+        & \qw \arrow[r]
+        & \text{ }i
+    \end{quantikz}
+    \caption{Circuit representation of such $U$ and $\{\Pi_i\}_i$. \\Note : $\mathscr{H}_A\otimes \mathscr{H}_I = \mathscr{H}_O\otimes\mathscr{H}_M$}
+\end{figure}
+\\\noindent
+$\forall i,$ the output state of the system is
+\begin{equation}
+    \label{output-state-kraus}
+    (I_o \otimes \ket{i}_M\bra{i})U\ket{\psi}\otimes\ket{0}_A = \ket{i}_M\braket{i|U|0}_A\ket{\psi}_I
+\end{equation}
+Assume $K_i = _M\braket{i|U|0}_A$. With (\ref{output-state-kraus}), we deduce that the output state is
+$K_i\ket{\psi}$, w.p. $\braket{\psi|K_i^\dagger K_i|\psi}$.
+Is that a valid set of operators $\{K_i\}_i$ ?
+
+\begin{equation}
+    \begin{aligned}
+        \sum_i K_i^\dagger K_i
+        & = \sum_i (_A\bra{0}\otimes I_I) U^\dagger (\ket{i}_M \otimes I_O)(I_O \otimes _M\bra{i})U(I_I\otimes \ket{0}_A)\\
+        & = (_A\bra{0}\otimes I_I)
+        \underbrace{U^\dagger (
+        \underbrace{
+            \underbrace{
+                \sum_i \ket{i}_M}_{=I_M}
+                    \otimes I_O
+            }_{=I_{OM}})
+            (I_O \otimes _M\bra{i})U
+        }_{= I_{OA}}(I_I\otimes \ket{0}_A) \\
+        & = (_A\bra{0}\otimes I_I)I_{OA}(I_I\otimes \ket{0}_A) \\
+        & = I_O \qquad \text{$K_i$ is a valid set.}
+    \end{aligned}
+\end{equation}
+
+\subsubsection*{$\{K_i\}_i \rightarrow$ Unitary}
+Let $U := \sum_i K_i \otimes \ket{i}_{MA}\bra{0} + \cdots $.
+The $\cdots$ represent extra terms used to make $U$ a unitary, but can be neglected in the computation.
+By tensoring with $\ket{0}_A$, we obtain
+\begin{equation}
+    U\ket{\psi}\otimes \ket{0}_A = \sum_i K_i \ket{\psi}\otimes\ket{i}
+\end{equation}
+And then
+\begin{equation}
+    \begin{aligned}
+        _A\braket{0 |U^\dagger U|0}_A
+            & = _A\bra{0}(\sum_i\ket{0}_{AM}\bra{i} K_i^\dagger \cdot \sum_j K_j\ket{j}_{AM}\bra{0})\ket{0}_A \\
+            & = \underbrace{_A\braket{0|0}_A}_{=1} \cdot \sum_{ij}(_M\bra{i}\otimes K_i^\dagger)(\ket{j}_M\otimes K_j) \underbrace{_A\braket{0|0}_A}_{=1} \\
+            & = \sum_{ij}\underbrace{\braket{i|j}}_{\delta_{ij}} K_i^\dagger K_j \\
+            & = \sum_i K_i^\dagger K_i \\
+            & = Id
+    \end{aligned}
+\end{equation}
+\subsection{POVMs}
+POVMs means Projective Operator Valued Measure : we "only care about the output $i$, not the state $K_i\ket{\psi}$".
+The probability of getting $i$ is $\braket{\psi | K_i^\dagger K_i | \psi}$.\\
+Let $E_i = K_i^\dagger K_i$.
+POVMs are then defined by the set $\{E_i\}_i$, such that $\sum_i E_i = Id, E_i\geq 0$.\\
+
+$E_i$ is semi-definite positive: $ \forall \psi, \braket{\psi|E_i|\psi} \geq 0$. This implies that $E_i$ is hermitian, and all its eigenvalues are $\geq 0$.
+\subsubsection*{POVM $\rightarrow$ Kraus operators}
+Let $K_i = \sqrt{E_i}$. $\{K_i\}_i$ is a well defined set of operators.
+\end{document}
