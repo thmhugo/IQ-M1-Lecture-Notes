@@ -1,0 +1,90 @@
+\documentclass{article}
+\author{Hugo Thomas \\ \texttt{hugo.thomas@tuta.io}}
+\usepackage[utf8]{inputenc}
+\usepackage{ bbm }
+\usepackage{ geometry}
+\geometry{legalpaper, margin=1.3in}
+
+\title{Signals and Communications}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Signals and systems}
+\subsection*{Dirac Impluse Relation}
+$$
+    f(t)\delta(t-t_0)=f(t_0)\delta(t-t_0)
+$$
+
+\subsection*{Energy of a continuous-time signal}
+$$
+E = \int_{-\infty}^{+\infty}x(t)x^*(t)dt
+$$
+
+\subsection*{Mean power of a continuous-time signal}
+$$
+P_x = \lim_{\theta \to +\infty} \frac{1}{2\theta}
+\int_{-\theta}^{+\theta}x(t)x^*(t)dt
+$$
+
+\begin{center}
+This is equal to $0$ if $x(t)$ is an energy-type signal.
+\end{center}
+
+
+\subsection*{Correlations}
+\begin{table}[h]
+\begin{tabular}{lll}
+& \multicolumn{1}{c}{Cross-correlation} & \multicolumn{1}{c}{Auto-correlation} \\
+energy-type & $\gamma_{xy}(\tau) = \int_{-\infty}^{+\infty}x(t)y^*(t-\tau)dt$ & $\gamma_{xx}(\tau) = \int_{-\infty}^{+\infty}x(t)x^*(t-\tau)dt$ \\
+power-type & $\gamma_{xy}(\tau) = \frac{1}{2\theta}\int_{-\theta}^{+\theta}x(t)y^*(t-\tau)dt$ & $\gamma_{xx}(\tau) = \frac{1}{2\theta}\int_{-\theta}^{+\theta}x(t)x^*(t-\tau)dt $
+\end{tabular}
+\end{table}
+
+\subsection*{Linearity and time-invariance}
+A system is linear iff:
+$$
+    \forall x_i(t), \forall a_i \in \mathbbm{R} \quad f(\sum_i a_ix_i) = \sum_ia_if(x_i)
+$$
+
+\subsection*{Convolution}
+$$
+y(t)=x(t)*h(t)=\int_{-\infty}^{_\infty}x(t-u)h(u)du
+$$
+
+\subsection*{Time shift}
+$$
+x(t)\delta(t-\tau)=x(t-\tau)
+$$
+\newpage
+\section{The Fourier Transform}
+\subsection*{Fourier transform of a continuous-time signal}
+$$
+X(f)=FT\{x(t)\}=\int_{-\infty}^{+\infty}x(t)e^{-j2\pi ft}dt
+$$
+
+\subsection*{Inverse Fourier transform of a continuous-time signal}
+$$
+x(t)=FT^{-1}\{X(f)\} = \int_{-\infty}^{_\infty}X(f)e^{+j2\pi ft}df
+$$
+
+\subsection*{Properties of the Fourier Transform}
+\subsubsection*{time shifting}
+$$
+FT\{x(t-\tau)\}=e^{+j2\pi ft}X(f)
+$$
+\subsubsection*{time reversal}
+$$
+FT\{x(-t)\}=X(-f)
+$$
+\subsubsection*{conjugation}
+$$
+FT\{x^*(t)\}=X^*(-f)
+$$
+
+\subsection*{Fourier transform of a covolution product}
+$$
+FT\{x(t)*y(t)\}=X(f)Y(f)
+$$
+\end{document}
