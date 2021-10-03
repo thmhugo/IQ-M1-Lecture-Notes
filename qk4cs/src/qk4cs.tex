@@ -322,9 +322,9 @@ $$
 $$
 
 The probability of getting the result $i$ by measuring $O$ on a state $\ket{\psi}$ is $\braket{\psi|\Pi_i|\psi}$
-\subsubsection*{Average value of an observable}
+\subsubsection{Expectation value and standard deviation}
 
-The average value of t of $O$, written $\langle O\rangle$, is by definition given by
+The expectation value of t of $O$, written $\langle O\rangle$, is by definition given by
 \begin{equation}
     \begin{aligned}
         \langle O\rangle
@@ -336,9 +336,31 @@ The average value of t of $O$, written $\langle O\rangle$, is by definition give
     \end{aligned}
 \end{equation}
 
-From this formula for the averag follows a formula for the standard deviation associated to the observation of $O$
+From this formula for the expectation value follows a formula for the standard deviation associated to the observation of $O$
 \begin{equation}
     \Delta^2 O = \langle(O - \langle O \rangle)^2\rangle = \langle O^2 \rangle - \langle O \rangle^2
+\end{equation}
+
+\paragraph{Note:} If $\ket{\psi}$ is an eigenstate of $O$, then $O\ket{\psi} = \lambda \ket{\psi}$.
+\\
+Hence:
+\begin{equation}
+    \begin{aligned}
+        \braket{O}
+            & = \braket{\psi | O | \psi} \\
+            & = \braket{\psi | \lambda | \psi} \\
+            & = \lambda\braket{\psi|\psi } \\
+            & = \lambda
+    \end{aligned}
+\end{equation}
+\\
+And:
+\begin{equation}
+    \begin{aligned}
+        O\ket{\psi} = \braket{O} \ket{\psi}
+            & \Rightarrow \Delta^2 O = (\lambda^2 - \lambda^2) = 0 \\
+            & \Rightarrow \Delta O = 0
+    \end{aligned}
 \end{equation}
 
 \subsubsection*{Example}
@@ -352,7 +374,7 @@ Using the Pauli matrix $\sigma_x = X =
 \\\noindent
 Known results : $X\ket{+} = \ket{+}$ and $X\ket{-}=-\ket{-}$.
 \\\noindent
-We define $\ket{\theta}:=\cos\omega\ket{0}+\sin\omega\ket{1}$
+We define $\ket{\theta}:=\cos\theta\ket{0}+\sin\theta\ket{1}$
 \\\noindent
 Then
 \begin{equation}
