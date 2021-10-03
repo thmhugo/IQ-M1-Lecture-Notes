@@ -93,7 +93,7 @@ $B$ is an orthonormal basis : $B = \{\ket{b_i}\}_{i=1}^d$ and $\forall i \braket
     \lstick{$\ket{\psi}$} & \qw & \meter{$B$} & \qw \arrow[r]
     & \rstick{$i$} \qw
 \end{quantikz}
-\caption{Circuit representation of the measurement of the state $\psi$}
+\caption{Circuit representation of the measurement of the state $\ket{\psi}$}
 \end{figure}
 
 \noindent
@@ -101,7 +101,7 @@ The probability of the output of a measurement is given by the following formula
 \begin{equation}
     \mathbbm{P}(out=\ket{b_i}) = |\braket{b_i|\psi}|^2
 \end{equation}
-The physical object is projected into the state $\ket{b_i}$, the is physically called the "wave packet reduction".
+The physical object is projected into the state $\ket{b_i}$, this is physically called the "wave packet reduction".
 
 \subsubsection{Qubit}
 \begin{equation}
@@ -169,15 +169,15 @@ We therefore deduce that
 \subsection{Bennett and Brassard Quantum Key Exchange: BB84}
 Goal: Alice and Bob $\rightarrow$ share a secret bit string , Eve does not know anything.
 \\
-Setting: Alice and Bob share a quantum channel and an authenticated classical channel.
+Settings: Alice and Bob share a quantum channel and an authenticated classical channel.
 \\\noindent
 Steps:
 \begin{enumerate}
     \item Alice prepares $n$ qubits $E_r \in \{\ket{0}, \ket{1}, \ket{+}, \ket{-}\}^n$, and she sends them to Bob
-    \item Bob receives . He measure them in the basis $\{B_{0,1}, B_{+,-}\}$
+    \item Bob receives . He measures them in the basis $\{B_{0,1}, B_{+,-}\}$
     \item They use the public classical channel to compare the basis Bob used. They throw away the \textit{bad basis} qubits.
     \item Alice and Bob sample the data and compare the error rate $e$. If $e=0$, they keep the key;
-        if $e = 25$, Eve kowns the key.
+        if $e = 25\%$, Eve kowns the key.
 \end{enumerate}
 What if $0 < e < 25$ ? Eve knows a part of the key.
 \section{Unitary transformation}
@@ -244,7 +244,7 @@ and $\ket{\phi}_{AB} \in \mathscr{H}_{AB}$.
 \\\noindent
 $\ket{\phi}_{AB}$ is a joint state of systems $A$ and $B$.
 \\ \\\noindent
-Not all states of $\mathscr{H}_{AB}$ are separables into one state of $\mathscr{H}_{A}$ and one state of $\mathscr{H}_{B}$
+Not all states of $\mathscr{H}_{AB}$ are separable into one state of $\mathscr{H}_{A}$ and one state of $\mathscr{H}_{B}$
 
 For example : $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11}) \ \mathscr{H}_{AB}$, but
 $\nexists \ket{\alpha}\in \mathscr{H}_A, \ket{\beta}\in \mathscr{H}_B$, such that \\\noindent
@@ -258,7 +258,7 @@ $\ket{\alpha}\otimes\ket{\beta} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$.
     \in \mathscr{H} \otimes \mathscr{H}.
 \end{equation}
 \subsubsection*{Proof}
-Suppose there exists a such unitary U, then U in a cloning operator.
+Suppose there exists a such unitary U, then U is a cloning operator.
 \begin{equation}
     \begin{aligned}
         U\ket{0} \eqdef \ket{0}\ket{0} \\
@@ -270,13 +270,13 @@ By computing the application of $U$ on the state $\ket{+}$, we get on the one ha
 \begin{equation}
     U(\frac{\ket{0}+\ket{1}}{\sqrt{2}}) = \frac{\ket{00}+\ket{11}}{\sqrt{2}}
 \end{equation}
-
+\\
 and on the other hand, by definition of the operator behavior
 \begin{equation}
     U(\frac{\ket{0}+\ket{1}}{\sqrt{2}}) = \frac{\ket{0}+\ket{1}}{\sqrt{2}} \otimes \frac{\ket{0}+\ket{1}}{\sqrt{2}}
     =\frac{1}{2}(\ket{00}+\ket{01}+\ket{10}+\ket{11})
 \end{equation}
-
+\\
 which is a contradiction. Then such a $U$ operator can not exist.
 \section{Measurements}
 \subsection{Projective measurement}
@@ -290,7 +290,7 @@ A projector is defined as follows:
 \begin{equation}
     \Pi_j = \sum_{l=1}^{d_j}\ket{l_l^j}\bra{l_l^j}
 \end{equation}
-Upon measuring the state $\ket{\psi}$, the probability of getting result $j$ us given by
+Upon measuring the state $\ket{\psi}$, the probability of getting result $j$ is given by
 \begin{equation}
     \braket{\psi|\Pi_j|\psi} = \| \Pi_j\ket{\psi}\|^2
 \end{equation}
@@ -324,7 +324,7 @@ $$
 The probability of getting the result $i$ by measuring $O$ on a state $\ket{\psi}$ is $\braket{\psi|\Pi_i|\psi}$
 \subsubsection{Expectation value and standard deviation}
 
-The expectation value of t of $O$, written $\langle O\rangle$, is by definition given by
+The expectation value of $O$, written $\langle O\rangle$, is by definition given by
 \begin{equation}
     \begin{aligned}
         \langle O\rangle
@@ -464,8 +464,7 @@ $\forall i,$ the output state of the system is
 \end{equation}
 Assume $K_i = _M\braket{i|U|0}_A$. With (\ref{output-state-kraus}), we deduce that the output state is
 $K_i\ket{\psi}$, w.p. $\braket{\psi|K_i^\dagger K_i|\psi}$.
-Is that a valid set of operators $\{K_i\}_i$ ?
-
+Is $\{K_i\}_i$ a valid set of operators ?
 \begin{equation}
     \begin{aligned}
         \sum_i K_i^\dagger K_i
@@ -477,16 +476,16 @@ Is that a valid set of operators $\{K_i\}_i$ ?
                 \sum_i \ket{i}_M}_{=I_M}
                     \otimes I_O
             }_{=I_{OM}})
-            (I_O \otimes _M\bra{i})U
+            (I_O \otimes _M\bra{i})
         }_{= I_{OA}}(I_I\otimes \ket{0}_A) \\
         & = (_A\bra{0}\otimes I_I)I_{OA}(I_I\otimes \ket{0}_A) \\
-        & = I_O \qquad \text{$K_i$ is a valid set.}
+        & = I_O \qquad \text{$\{K_i\}_i$ is a valid set.}
     \end{aligned}
 \end{equation}
 
 \subsubsection*{$\{K_i\}_i \rightarrow$ Unitary}
 Let $U := \sum_i K_i \otimes \ket{i}_{MA}\bra{0} + \cdots $.
-The $\cdots$ represent extra terms used to make $U$ a unitary, but can be neglected in the computation.
+The $\cdots$ represents extra terms used to make $U$ a unitary, but can be neglected in the computation.
 By tensoring with $\ket{0}_A$, we obtain
 \begin{equation}
     U\ket{\psi}\otimes \ket{0}_A = \sum_i K_i \ket{\psi}\otimes\ket{i}
