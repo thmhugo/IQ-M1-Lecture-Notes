@@ -363,6 +363,34 @@ And:
     \end{aligned}
 \end{equation}
 
+\subsubsection{Commutators}
+A key property of quantum physics is the existence of incompatible measurements:
+for any physical property $A$, there isi another physical property $B$ which is incompatible
+with $A$. The incompatible means it is physically impossible to prepare a state $\ket{\psi}$
+wich gives perfectly predictible outputs for both measurements $A$ and $B$.
+Let us first assume $A$ and $B$ to be observables.
+A key property of this pair of observable is their commutator
+\begin{equation}
+    [A,B]:= AB-BA
+\end{equation}
+
+If $A$ and $B$ commute (i.e $[A,B]=0 \Leftrightarrow AB = BA$), there exists a basis of state
+such that the result of a measurement of $A$ and a measurement of $B$ are perfectly defined.
+
+Conversely, if such a basis exists, then $[A,B]=0$
+
+Therefore, if $A$ and $B$ do not commute, they correspond to incompatible measurements.
+(The proofs are in the $4^{th}$ tutorial.)
+
+\subsubsection{The Robertson-Heisenberg uncertainty relation}
+This relation evaluates the sharpness of two observables we will call $A$ and $B$ through
+the standard deviations $\Delta A$ and $\Delta B$, and the states that, for any state $\ket{\psi}$
+and any observable $A$ and $B$
+
+\begin{equation}
+    \Delta A \Delta B \geq \frac{1}{2}|\braket{\psi|[A,B]|\psi}
+\end{equation}
+
 \subsubsection*{Example}
 Using the Pauli matrix $\sigma_x = X =
     \begin{bmatrix}
