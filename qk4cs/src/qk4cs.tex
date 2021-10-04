@@ -85,7 +85,13 @@ $\braket{\psi|\phi} $ is the hermitian product of $\psi$ and $\phi$.
 \end{itemize}
 
 \subsection{Measurement in a basis $B$}
-$B$ is an orthonormal basis : $B = \{\ket{b_i}\}_{i=1}^d$ and $\forall i \braket{b_i|b_i} = \delta_{i, j}$.
+$B$ is an orthonormal basis : $B := \{\ket{b_i}\}_{i=1}^d$. B has the following properties:
+\begin{equation}
+    \begin{aligned}
+        \forall i \braket{b_i|b_i} = \delta_{i, j} & \text{ \textit{ (orthonormality)}} \\
+        \sum_{i=1}^d\ket{b_i}\bra{b_j} = I & \textit{ (completeness)}
+    \end{aligned}
+\end{equation}
 
 \begin{figure}[h]
 \centering
@@ -128,6 +134,41 @@ The physical object is projected into the state $\ket{b_i}$, this is physically 
 \end{quantikz}
 \caption{Measure of the state $\ket{0}$ in the basis $\ket{\pm}$}
 \end{figure}
+
+\subsection{Pauli matrices and properties}
+There are four extremely useful two by two matrices calles the \textit{Pauli matrices}.
+$$
+\begin{aligned}
+    \sigma_0 \equiv I \equiv &
+        \begin{bmatrix}
+            1 & 0 \\ 0 & 1
+        \end{bmatrix}
+    \quad & \quad
+    \sigma_1 \equiv \sigma_x = X \equiv &
+        \begin{bmatrix}
+            0 & 1 \\ 1 & 0
+        \end{bmatrix}
+    \\
+    \sigma_2 \equiv \sigma_y \equiv Y \equiv &
+        \begin{bmatrix}
+            0 & -i \\ i & 0
+        \end{bmatrix}
+    \quad & \quad
+    \sigma_3 \equiv \sigma_z \equiv Z \equiv &
+        \begin{bmatrix}
+            1 & 0 \\ 0 & -1
+        \end{bmatrix}
+\end{aligned}
+$$
+
+\subsubsection*{Pauli matrices properties}
+\begin{itemize}[label=-]
+    \item braket decomposition
+    \item commutation relation % may put this in the commutator section
+        \begin{equation}
+            [X,Y] = 2iZ; \quad [Y, Z] = 2iX; \quad [Z,X] = 2iY
+        \end{equation}
+\end{itemize}
 
 \subsection{Wiesner's Quantum Money}
 Based on the conjugate coding.
@@ -235,20 +276,47 @@ Is $U$ an unitary ?
 \section{Composition of systems}
 Let $A \in \mathscr{H}_A = \mathbbm{C}^{d_A}$ and $B \in \mathscr{H}_B = \mathbbm{C}^{d_B}$
 to be two systems in their respective vector spaces.
-Then we can construct the space $\mathscr{H}_{AB} = \mathscr{H}_A \otimes \mathscr{H}_B$, its basis is
-$\{\ket{ij}_{AB}\}_{i, j}$, and dim($\mathscr{H}_{AB}$) = $d_A \times d_B$
+Then we can construct the space
+\begin{equation}
+    \mathscr{H}_{AB} = \mathscr{H}_A \otimes \mathscr{H}_B
+\end{equation}
+Its orthonormal basis is $\{\ket{ij}_{AB}\}_{i, j}$, and
+\begin{equation}
+    \text{dim}\mathscr{H}_{AB} = \text{dim}\mathscr{H}_A \cdot \text{dim}\mathscr{H}_B
+\end{equation}
 \\\noindent
 If $\ket{\alpha} = \sum_i\alpha_i\ket{i}_A$ and $\ket{\beta} = \sum_i\beta_i\ket{i}_B$,
-then $\ket{\phi}_{AB}=\ket{\alpha} \otimes \ket{\beta} = \sum_{i,j}\alpha_i\beta_j\ket{i}_A\ket{j}_B$,
-and $\ket{\phi}_{AB} \in \mathscr{H}_{AB}$.
+then
+\begin{equation}
+    \ket{\phi}_{AB}=\ket{\alpha} \otimes \ket{\beta} = \sum_{i,j}\alpha_i\beta_j\ket{i}_A\ket{j}_B
+\end{equation}
+
+and $\ket{\phi}_{AB} \in \mathscr{H}_{AB}$. $\ket{\phi}_{AB}$ is a joint state of systems $A$ and $B$.
 \\\noindent
-$\ket{\phi}_{AB}$ is a joint state of systems $A$ and $B$.
-\\ \\\noindent
+The inner product between two basis states can be defined as
+\begin{equation}
+    \braket{i,j|k,l}=\braket{i|k}_A\braket{j|l}_B = \delta_{ik}\delta_{jl}
+\end{equation}
+\\\noindent
+The most general state in the space $\mathscr{H}_{AB}$ can be written
+\begin{equation}
+    \ket{\psi} = \alpha \ket{00} + \beta \ket{01} + \gamma \ket{10} + \delta \ket{11}
+\end{equation}
+with the usual condition for $\ket{\psi}$ to be normalized:
+\begin{equation}
+    |\alpha|^2+|\beta|^2+|\gamma|^2+|\delta|^2 = 1
+\end{equation}
+\\\noindent
 Not all states of $\mathscr{H}_{AB}$ are separable into one state of $\mathscr{H}_{A}$ and one state of $\mathscr{H}_{B}$
 
-For example : $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11}) \ \mathscr{H}_{AB}$, but
+For example : $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11}) \in \mathscr{H}_{AB}$, but
 $\nexists \ket{\alpha}\in \mathscr{H}_A, \ket{\beta}\in \mathscr{H}_B$, such that \\\noindent
 $\ket{\alpha}\otimes\ket{\beta} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$.
+
+Necessary condition on the coefficients $(\alpha, \beta, \gamma, \delta)$ of a state to be separable:
+\begin{equation}
+    \alpha\delta = \beta\gamma
+\end{equation}
 
 %TODO : add the part about the partial measurement
 \subsection{No cloning theorem}
@@ -278,6 +346,38 @@ and on the other hand, by definition of the operator behavior
 \end{equation}
 \\
 which is a contradiction. Then such a $U$ operator can not exist.
+
+\subsection{Superdense coding}
+\textit{Superdense coding} involves two parties, \texttt{Alice} and \texttt{Bob}.
+The protocol allows \texttt{Alice} and \texttt{Bob} to share two bits of information by exchanging just one qubit.
+Basically, \texttt{Alice} is in possession of two classical bits of information, which she wishes to send to \texttt{Bob}.
+
+Suppose \texttt{Alice} and \texttt{Bob} initially share a pair of qubits in the entangled state
+\begin{equation}
+    \ket{\psi} = \frac{\ket{00} + \ket{11}}{\sqrt{2}}
+\end{equation}
+
+Here is the procedure.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c}
+    The state \texttt{Alice} wants to send & The gate she applies & The states after \\
+    00 & $I$ & $\frac{\ket{00} + \ket{11}}{\sqrt{2}} = \ket{\phi^+}$  \\
+    01 & $Z$ & $\frac{\ket{00} - \ket{11}}{\sqrt{2}} = \ket{\phi^-}$ \\
+    10 & $X$ & $\frac{\ket{10} + \ket{01}}{\sqrt{2}} = \ket{\psi^+}$ \\
+    11 & $Y$ & $\frac{\ket{01} - \ket{10}}{\sqrt{2}} = \ket{\psi^-}$
+    \end{tabular}
+\end{table}
+
+\texttt{Alice} send her qubit to \texttt{Bob} and he measures the resulting pair in the base \\
+$\{\ket{\phi^+}, \ket{\phi^-},\ket{\psi^+}, \ket{\psi^-}\}$. This is indeed a basis, and its name is the \textit{Bell basis},
+and the states are called the \textit{Bell states}.
+
+
+\subsection{Quantum teleportation}
+
+
 \section{Measurements}
 \subsection{Projective measurement}
 A projective measurement is described by an observable, a Hermitian operator. They are defined by a set of projectors $\{\Pi_j\}_{j=1}^k, k \leq d$.\\
@@ -324,7 +424,7 @@ $$
 The probability of getting the result $i$ by measuring $O$ on a state $\ket{\psi}$ is $\braket{\psi|\Pi_i|\psi}$
 \subsubsection{Expectation value and standard deviation}
 
-The expectation value of $O$, written $\langle O\rangle$, is by definition given by
+The expectation value of $O$, written $\langle O\rangle$, is given by
 \begin{equation}
     \begin{aligned}
         \langle O\rangle
@@ -365,16 +465,16 @@ And:
 
 \subsubsection{Commutators}
 A key property of quantum physics is the existence of incompatible measurements:
-for any physical property $A$, there isi another physical property $B$ which is incompatible
+for any physical property $A$, there exists another physical property $B$ which is incompatible
 with $A$. The incompatible means it is physically impossible to prepare a state $\ket{\psi}$
-wich gives perfectly predictible outputs for both measurements $A$ and $B$.
+which gives perfectly predictible outputs for both measurements $A$ and $B$.
 Let us first assume $A$ and $B$ to be observables.
 A key property of this pair of observable is their commutator
 \begin{equation}
     [A,B]:= AB-BA
 \end{equation}
 
-If $A$ and $B$ commute (i.e $[A,B]=0 \Leftrightarrow AB = BA$), there exists a basis of state
+If $A$ and $B$ commute (i.e $[A,B]=0 \Leftrightarrow AB = BA$), there exists a basis
 such that the result of a measurement of $A$ and a measurement of $B$ are perfectly defined.
 
 Conversely, if such a basis exists, then $[A,B]=0$
@@ -530,7 +630,8 @@ And then
     \end{aligned}
 \end{equation}
 \subsection{POVMs}
-POVMs means Projective Operator Valued Measure : we "only care about the output $i$, not the state $K_i\ket{\psi}$".
+POVMs means Projective Operator Valued Measure :
+we "only care about the output $i$, not the state $K_i\ket{\psi}$".
 The probability of getting $i$ is $\braket{\psi | K_i^\dagger K_i | \psi}$.\\
 Let $E_i = K_i^\dagger K_i$.
 POVMs are then defined by the set $\{E_i\}_i$, such that $\sum_i E_i = Id, E_i\geq 0$.\\
