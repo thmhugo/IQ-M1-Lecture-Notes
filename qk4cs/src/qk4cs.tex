@@ -135,41 +135,6 @@ The physical object is projected into the state $\ket{b_i}$, this is physically 
 \caption{Measure of the state $\ket{0}$ in the basis $\ket{\pm}$}
 \end{figure}
 
-\subsection{Pauli matrices and properties}
-There are four extremely useful two by two matrices calles the \textit{Pauli matrices}.
-$$
-\begin{aligned}
-    \sigma_0 \equiv I \equiv &
-        \begin{bmatrix}
-            1 & 0 \\ 0 & 1
-        \end{bmatrix}
-    \quad & \quad
-    \sigma_1 \equiv \sigma_x = X \equiv &
-        \begin{bmatrix}
-            0 & 1 \\ 1 & 0
-        \end{bmatrix}
-    \\
-    \sigma_2 \equiv \sigma_y \equiv Y \equiv &
-        \begin{bmatrix}
-            0 & -i \\ i & 0
-        \end{bmatrix}
-    \quad & \quad
-    \sigma_3 \equiv \sigma_z \equiv Z \equiv &
-        \begin{bmatrix}
-            1 & 0 \\ 0 & -1
-        \end{bmatrix}
-\end{aligned}
-$$
-
-\subsubsection*{Pauli matrices properties}
-\begin{itemize}[label=-]
-    \item braket decomposition
-    \item commutation relation % may put this in the commutator section
-        \begin{equation}
-            [X,Y] = 2iZ; \quad [Y, Z] = 2iX; \quad [Z,X] = 2iY
-        \end{equation}
-\end{itemize}
-
 \subsection{Wiesner's Quantum Money}
 Based on the conjugate coding.
 
@@ -491,6 +456,12 @@ and any observable $A$ and $B$
     \Delta A \Delta B \geq \frac{1}{2}|\braket{\psi|[A,B]|\psi}
 \end{equation}
 
+\subsubsection{Anti-commutator}
+The anti commutator of two observables $A$ and $B$ is defined by
+\begin{equation}
+    \{A,B\} = AB+BA
+\end{equation}
+
 \subsubsection*{Example}
 Using the Pauli matrix $\sigma_x = X =
     \begin{bmatrix}
@@ -639,4 +610,307 @@ POVMs are then defined by the set $\{E_i\}_i$, such that $\sum_i E_i = Id, E_i\g
 $E_i$ is semi-definite positive: $ \forall \psi, \braket{\psi|E_i|\psi} \geq 0$. This implies that $E_i$ is hermitian, and all its eigenvalues are $\geq 0$.
 \subsubsection*{POVM $\rightarrow$ Kraus operators}
 Let $K_i = \sqrt{E_i}$. $\{K_i\}_i$ is a well defined set of operators.
+
+\subsection{The global phase}
+\paragraph{Lemma: }
+The global phase is irrelevant\\
+Of couse, the state $\ket{\psi} \neq e^{i\phi}\ket{\psi}$
+
+\paragraph{Proof: }
+First, we have
+\begin{equation}
+    |\braket{\psi|e^{i\phi}|\psi}|^2 = |e^{i\phi}|^2 = 1
+\end{equation}
+
+Using the generalized measurements $\{K_i\}_i$ such that $\sum_i K_i = Id$
+\\\noindent
+Then:
+\begin{equation}
+    K_ie^{i\phi}\ket{\psi} = e^{i\phi}K_i\ket{\psi}
+\end{equation}
+\noindent
+The phase of the input is the same as the phase of the output.
+\\\noindent
+And
+\begin{equation}
+    \begin{aligned}
+        \|K_ie^{i\phi}\ket{\psi}\|^2_2
+            & =\begin{cases}
+               \| K_i \ket{\psi} \|_2^2 = & \sqrt{ \mathbb{P}(i\ket{\psi})} \\
+               \|e^{i\phi} K_i\ket{\psi}\|_2^2 & \sqrt{\mathbb{P}(i|e^{i\phi}\ket{\psi})}
+            \end{cases}
+    \end{aligned}
+\end{equation}
+\\\noindent
+Hence, the global phase is irrelevant, and there is no way to measure the global phase.
+\\\noindent
+However, the relative phase is important for later computations.
+\begin{equation}
+    \frac{1}{\sqrt{2}}(\ket{0}+\underbrace{e^{i\phi}}_{\text{relative phase}}\ket{1})
+\end{equation}
+
+\subsection{General quantum state}
+\subsubsection*{Number of parameters to describe a quantum state}
+Let $\mathscr{H} = \mathbbm{C^d}$ and $\ket{\psi} \in \mathscr{H}: \ket{\psi} = \sum_{i=0}^d \alpha_i \ket{i}$
+, (with $\alpha_i \in \mathbbm{C}$ and $\sum_i |\alpha_i|^2=1$). If we consider $\alpha_i \in \mathbbm{R}$
+is the global phase, then $2d-2$ real parameters are needed to represent the quantum state.
+
+\subsubsection*{Example}
+Qubit in $\mathscr{H}$:
+\begin{itemize}[label=-]
+    \item $d=2 \rightarrow 2\cdot2-2 = 2$ right parameters : $(\theta, \varphi)$.
+    \item $d=3 \rightarrow 4$ real parameters.
+\end{itemize}
+A quantum state can be written, with the parameters $\theta$ and $\varphi$ as
+\begin{equation}
+    \ket{\theta, \varphi} = \cos \frac{\theta}{2}\ket{0} + e^{i\varphi}\sin \frac{\theta}{2}\ket{1}
+\end{equation}
+
+\section{Bloch sphere}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.15]{bloch-sphere.png}
+    \caption{Graphical representation of a quantum state in the Bloch sphere}
+\end{figure}
+
+We will denote $\ket{\psi}$ as the vector $\vec{m}$ in the later computations.
+\begin{equation}
+    \begin{aligned}
+        \vec{m} & = \begin{bmatrix}
+            u \\ v \\ w
+        \end{bmatrix} \text{such that } u^2 + v^2 + w^2 = 1 \\
+        \vec{m} & =
+        \begin{bmatrix}
+            \label{def-vect-m}
+            \cos \theta \cdot \cos \varphi \\
+            \sin \theta \cdot \sin \varphi \\
+            \cos \theta &
+        \end{bmatrix}
+    \end{aligned}
+\end{equation}
+
+Are $\vec{m}$ and $\vec{-m}$ orthogonal ?
+\begin{equation}
+    \label{m-m-orthogonal}
+    \begin{aligned} % le bordel
+        \braket{m|-m}
+            & = \braket{\theta,\varphi|\pi-\theta,\varphi+\pi[2\pi]} \\
+            & = \Big(\cos\frac{\theta}{2}\bra{0}+e^{i\varphi}\sin\frac{\theta}{2}\bra{1}\Big)
+                \Big(\underbrace{\cos(\frac{\pi}{2}-\frac{\theta}{2})}_{\sin\frac{\theta}{2}}\ket{0}+e^{i(\varphi+\pi)}
+                \underbrace{\sin(\frac{\pi}{2}-\frac{\theta}{2})}_{\cos\frac{\theta}{2}}\ket{1}\Big) \\
+            & = \cos\frac{\theta}{2}\sin\frac{\theta}{2}\braket{0|0}
+                +e^{i\varphi}\sin\frac{\theta}{2}(-e^{i\varphi})\cos\frac{\theta}{2}\braket{1|1} \\
+        \braket{m|-m}
+            & = 0
+    \end{aligned}
+\end{equation}
+
+Orthogonal states in the Hilbert space correspond to opposite vectors in the Bloch sphere.
+
+\section{Pauli operators}
+\subsection{Pauli matrices and properties}
+There are four extremely useful two by two matrices called the \textit{Pauli matrices}.
+$$
+\begin{aligned}
+    \sigma_0 \equiv I \equiv &
+        \begin{bmatrix}
+            1 & 0 \\ 0 & 1
+        \end{bmatrix}
+    \quad & \quad
+    \sigma_1 \equiv \sigma_x = X \equiv &
+        \begin{bmatrix}
+            0 & 1 \\ 1 & 0
+        \end{bmatrix}
+    \\
+    \sigma_2 \equiv \sigma_y \equiv Y \equiv &
+        \begin{bmatrix}
+            0 & -i \\ i & 0
+        \end{bmatrix}
+    \quad & \quad
+    \sigma_3 \equiv \sigma_z \equiv Z \equiv &
+        \begin{bmatrix}
+            1 & 0 \\ 0 & -1
+        \end{bmatrix}
+\end{aligned}
+$$
+\subsubsection*{Properties}
+\begin{itemize}[label=-]
+    \item they are indeed hermitian:
+    \begin{equation}
+        \forall i \in \{1, 2, 3\} f\quad \sigma_i^\dagger\sigma = \sigma_i^2 = Id
+    \end{equation}
+    \item braket decomposition
+    \begin{equation}
+        \begin{aligned}
+            \sigma_x & = \ket{0}\bra{1} + \ket{1}\bra{0}
+            \\
+            \sigma_y & = -i\ket{0}\bra{1} + i\ket{1}\bra{0}
+            \\
+            \sigma_z & = \ket{0}\bra{1} - \ket{1}\bra{1}
+        \end{aligned}
+    \end{equation}
+    \item commutation relation % may put this in the commutator section
+        \begin{equation}
+            [X,Y] = 2iZ; \quad [Y, Z] = 2iX; \quad [Z,X] = 2iY
+        \end{equation}
+\end{itemize}
+
+\subsubsection{Expectation values of the operators}
+\begin{itemize}[label=-]
+    \item measure $\sigma_z$ on the state $\ket{\theta, \varphi}$
+    \begin{equation}
+        \begin{aligned}
+            \braket{\sigma_z}
+                & = \braket{\theta, \varphi|Z|\theta, \varphi} \\
+                & = \frac{1}{2} + \frac{1}{2}\cos\theta - \frac{1}{2} + \cos\theta \\
+                & = \cos \theta = w \text{  (the $w$ component of $\vec{m}$)}
+        \end{aligned}
+    \end{equation}
+    \item measure $\sigma_x$ on the state $\ket{\theta, \varphi}$
+    \begin{equation}
+        \begin{aligned}
+            \braket{\sigma_x}
+                & = \braket{\theta, \varphi|X|\theta, \varphi} \\
+                & = \Big(\cos\frac{\theta}{2}\bra{0}+e^{i\varphi}\sin\frac{\theta}{2}\bra{1}\Big)
+                    + \underbrace{\Big(\cos\frac{\theta}{2}\ket{1}+e^{i\varphi}\sin\frac{\theta}{2}\ket{0}\Big)}_{=X\ket{\theta, \varphi}} \\
+                & = \cos\frac{\theta}{2}\sin\frac{\theta}{2}
+                    \Big(\underbrace{e^{i\varphi}+e^{-i\varphi}}_{=2\cos\varphi}\Big)\\
+                & = \sin\theta\cos\varphi = u \text{  (the $u$ component of $\vec{m}$)}
+        \end{aligned}
+    \end{equation}
+    \item measure $\sigma_y$ on the state $\ket{\theta, \varphi}$
+    \begin{equation}
+        \begin{aligned}
+            \braket{\sigma_y} = v
+        \end{aligned}
+    \end{equation}
+    % Need to do the calculation by hand
+\end{itemize}
+
+Hence $\vec{m} = \begin{bmatrix}
+    \braket{X} \\ \braket{Y} \\ \braket{Z}
+\end{bmatrix}$. The set $(X, Y, Z)$ is tomographically complete.
+
+\subsubsection*{Pauli matrices as unitary}
+
+\begin{itemize}[label=-]
+    \item $\sigma_z = \begin{bmatrix}
+        1 & 0 \\ 0 & -1
+    \end{bmatrix}$
+    \begin{equation}
+        \begin{aligned}
+            \sigma_z\ket{\theta, \varphi}
+                & = \cos \frac{\theta}{2}\ket{0} - e^{i\varphi}\sin\frac{\theta}{2}\ket{1} \\
+                & = \cos \frac{\theta}{2}\ket{0} + e^{i(\varphi + \pi)}\sin\frac{\theta}{2}\ket{1} \\
+                & = \ket{\theta, \varphi + \pi} \\
+                & = R_z(\pi)\ket{\theta, \varphi}
+        \end{aligned}
+    \end{equation}
+    It is a rotation of an angle $\pi$ around the $z$ axis on the Bloch sphere.
+
+    \item $\sigma_x = \begin{bmatrix}
+        0 & 1 \\ 1 & 0
+    \end{bmatrix}$
+    \begin{equation}
+        \begin{aligned}
+            \sigma_x\ket{\theta, \varphi}
+                & = e^{i\varphi}\sin\frac{\theta}{2}\ket{0} + \cos\frac{\theta}{2}\ket{1} \\
+                & = e^{i\varphi}(\cos\frac{\pi-\theta}{2}\ket{0} + e^{-i\varphi}\sin\frac{\pi-\theta}{2}\ket{1}) \\
+                & = e^{i\varphi}\ket{\pi - \theta, -\varphi} \\
+                & = R_x(\pi)\ket{\theta, \pi}
+        \end{aligned}
+    \end{equation}
+
+    % Not sure of this
+    \item $\sigma_y = \begin{bmatrix}
+        0 & -i \\ i & 0
+    \end{bmatrix}$
+    \begin{equation}
+        \begin{aligned}
+            \sigma_y\ket{\theta, \varphi}
+                & = i\cos\frac{\theta}{2}\ket{1} - ie^{i\varphi}\sin\frac{\theta}{2}\ket{0} \\
+                & = i\cos\frac{\theta}{2}\ket{1} + ie^{i(\varphi+\pi)}\sin\frac{\theta}{2}\ket{0}\\
+                & = ie^{i(\pi+\varphi)}\Big(e^{-i(\pi+\varphi)}\cos\frac{\theta}{2}\ket{1}+\sin\frac{\theta}{2}\ket{0}\Big) \\
+                & = ie^{i(\pi+\varphi)}\Big(\cos\frac{\theta-\pi}{2}\ket{1}+e^{-i(\pi-\varphi)}\sin\frac{\pi-\theta}{2}\ket{1}) \\
+                & = ie^{i(\pi+\varphi)}\ket{\pi+\theta, -\pi-\theta} \\
+                & = R_x(\pi)\ket{\theta, \varphi}
+        \end{aligned}
+    \end{equation}
+
+\end{itemize}
+
+\newpage
+\subsubsection{Pauli Group}
+The Pauli group is defined by the set $G_1 = \{\eta I, \eta\sigma_x, \eta\sigma_y, \eta\sigma_z\}_{\eta\in\{\pm 1, \pm i\}}$.
+\begin{itemize}
+    \item they are their own inverse : $\sigma_i^{-1}=\sigma_i$
+    \item their product is in $G_1$:
+    The Pauli matrices anti-commute: $\{\sigma_i, \sigma_j\} = 0, \forall i \neq j$
+    \begin{itemize}
+        \item $\sigma_x\sigma_y=i\sigma_z=-\sigma_y\sigma_x$
+        \item $\sigma_y\sigma_z=i\sigma_x=-\sigma_z\sigma_y$
+        \item $\sigma_z\sigma_x=i\sigma_y=-\sigma_x\sigma_z$
+    \end{itemize}
+\end{itemize}
+
+\section{Generic observables}
+\subsection{Projector onto $\vec{m}$ for an arbitrary vector $\ket{\theta, \varphi}$}
+
+Following the definition (\ref{def-vect-m}) of the vector $\vec{m}$, we can define a projector onto
+the vector $\vec{m}$ for any arbitrary state $\ket{\theta, \varphi}$.
+
+\begin{equation}
+    \begin{aligned}
+        \ket{\vec{m}}\bra{\vec{m}}
+            & = \cos^2\frac{\theta}{2}\ket{0}\bra{0}+\sin^2\frac{\theta}{2}\ket{1}\bra{1} +
+                \cos\frac{\theta}{2}\sin\frac{\theta}{2}\Big(e^{i\varphi}\ket{1}\bra{0}+e^{i\varphi}\ket{0}\bra{1}\Big) \\
+            & = \underbrace{\frac{1}{2}(1+\cos\theta)\ket{0}\bra{0}+ \frac{1}{2}(1-\cos\theta)\ket{1}\bra{1}}_{\text{diagonal}} +
+                \underbrace{\frac{1}{2}\sin\theta \Big(e^{i\varphi}\ket{1}\bra{0}+e^{-i\varphi}\ket{0}\bra{1}\Big)}_{\text{anti-diagonal part}} \\
+            & = \frac{1}{2}\Big(I + \cos\theta\sigma_z + \sin\theta\cos\varphi\sigma_x + i\sin\theta\cos\varphi\sigma_y \Big) \\
+            & = \frac{1}{2}\Big(I + u\sigma_x + v\sigma_y + w\sigma_z \Big) \\
+            & = \frac{1}{2}(I+\vec{m}\vec{\sigma})
+                \quad \text{ considering } \vec{\sigma}=\begin{bmatrix}\sigma_x & \sigma_y & \sigma_z\end{bmatrix}
+    \end{aligned}
+\end{equation}
+
+\subsection{Generic observable}
+Let $\sigma_{\vec{m}}:=1\ket{\vec{m}}\bra{\vec{m}}-1\ket{-\vec{m}}\bra{-\vec{m}}$.
+(recall from (\ref{m-m-orthogonal}), $\vec{m}$ and $-\vec{m}$ are orthogonal).
+
+\begin{equation}
+    \begin{aligned}
+        \sigma_{\vec{m}}
+            & = \ket{\vec{m}}\bra{\vec{m}}-\ket{-\vec{m}}\bra{-\vec{m}} \\
+            & = \frac{1}{2}(I+\vec{m}\vec{\sigma}-I-(-\vec{m}\vec{\sigma}) \\
+            & = \vec{m}\vec{\sigma}
+    \end{aligned}
+\end{equation}
+\noindent
+We have $\sigma_{\vec{m}}=\vec{m}\vec{\sigma}$ and $\sigma_{\vec{m}}^\dagger=\sigma_{\vec{m}}$.
+
+\begin{equation}
+    \begin{aligned}
+        \sigma_{\vec{m}}^2
+            & = (u\sigma_x + v\sigma_y + w\sigma_z)(u\sigma_x + v\sigma_y + w\sigma_z) \\
+            & = (u^2 + v^2 + w^2)I + uv (\sigma_x\sigma_y + \sigma_y\sigma_x) + uw (\sigma_x\sigma_z + \sigma_z\sigma_x) + \cdots \\
+            & = \underbrace{(u^2 + v^2 + w^2)}_{=1 (\text{by def. \ref{def-vect-m}})}I +
+                \underbrace{uv\{\sigma_x; \sigma_y\}}_{=0} + \underbrace{uw\{\sigma_x, \sigma_z\}}_{=0} \\
+            & = I
+    \end{aligned}
+\end{equation}
+$\sigma_{\vec{m}}$ corresponds to a rotation around the $\vec{m}$ axis.
+
+\subsubsection*{Example}
+$$
+% TODO rewrite the subscript in a better way.
+\sigma_{\frac{1}{\sqrt{2}}\begin{bmatrix}1\\0\\1\end{bmatrix}} = H = \frac{1}{\sqrt{2}}
+\begin{bmatrix}
+    1 & 1 \\ 1 & -1
+\end{bmatrix}
+$$
+
+\subsection{Arbitrary rotation}
+
+
+
 \end{document}
