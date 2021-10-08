@@ -47,7 +47,7 @@
 \newpage
 
 \section{Introduction}
-Physical system which has $d \in \mathbbm{N}$ possible distinguishable states.
+Physical system which has $d \in \mathbbm{N}$ possible distinguishabll states.
 Its physical state $\ket{\psi} \in \mathscr{H}$, the Hilbert space $\mathbbm{C}^d$.
 
 \begin{equation}
@@ -910,7 +910,52 @@ $$
 $$
 
 \subsection{Arbitrary rotation}
+The hamiltonian of a system is given by the formula
+\begin{equation}
+        H=\frac{\hbar\omega}{2}\sigma_z
+\end{equation}
+And we can build an unitary that express the hamiltonian
+\begin{equation}
+    U(t) = e^{-\frac{i}{\hbar}Ht}=e^{-i\frac{\omega t}{2}\sigma_z}
+    = \begin{bmatrix}
+        e^{i\omega\frac{t}{2}} & \cdot \\ \cdot & e^{i\omega\frac{t}{2}}
+    \end{bmatrix}
+\end{equation}
 
+By measuring the hamiltonian over time on the general state $\ket{\theta, \varphi}$,
+we get that
+\begin{equation}
+    \label{hamiltonian-on-general-state}
+    \begin{aligned}
+        U(t)\ket{\theta, \varphi}
+            & = e^{-i\frac{\omega t}{2}}\cos\frac{\theta}{2} + e^{+i(\frac{\omega t}{2}+\varphi)}\sin\frac{\theta}{2}\ket{1} \\
+            & = e^{-i\frac{\omega t}{2}}\Big(\cos\frac{\theta}{2}\ket{0} + e^{i(\omega t + \varphi)}\sin\frac{\theta}{2}\ket{1}\Big) \\
+            & = e^{-i\frac{\omega t}{2}}\ket{\theta, \varphi + \omega t}    \end{aligned}
+\end{equation}
 
+From (\ref{hamiltonian-on-general-state}), we can deduce that
+\begin{equation}
+    e^{-i\frac{\omega t}{2}\sigma_z}=R_z(\omega t)\cdot e^{-i\frac{\omega t}{2}}
+    \quad \text{ with } R_z(\omega t) = \begin{bmatrix}
+        1 & \cdot \\ \cdot & e^{i\omega t}
+    \end{bmatrix}
+\end{equation}
+
+\paragraph{Note: }
+The relative phase from $R_z(\omega t)$ and $U(t)$ are equal.
+\\\noindent
+From the previous results, we can express an arbitrary rotation matrix $R_{\vec{m}}$ up to a global phase.
+
+\begin{equation}
+    \begin{aligned}
+        R_{\vec{m}}(\alpha)
+            & = e^{-i\frac{\alpha}{2}\sigma_{\vec{m}}} \\
+            & = \sum_{k=0}^\infty
+             \frac{(-i \frac{\alpha}{2}\sigma_{\vec{m}})^k}{k!} \\
+            & = \sum_{q=0}^\infty \Big(\frac{(-i)^{2q}(\frac{\alpha}{2})^{2q}}{(2q)!}I +
+                \frac{(-i)^{2q+1}(\frac{\alpha}{2})^{2q+1}}{(2q+1)!}\sigma_{\vec{m}}\Big) \\
+            & = \cos\frac{\alpha}{2}I - i\sin\frac{\alpha}{2}\sigma_{\vec{m}}
+    \end{aligned}
+\end{equation}
 
 \end{document}
