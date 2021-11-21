@@ -18,17 +18,24 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 
+\usepackage{ fancyhdr }
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LOE]{\leftmark}
+\fancyfoot[COE]{\thepage}
+
 % = with "def" above.
-\newcommand\eqdef{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily def}}}{=}}}
+\newcommand\eqdef{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily
+def}}}{=}}}
 % = with "goal" above.
-\newcommand\eqgoal{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily goal}}}{=}}}
+\newcommand\eqgoal{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily
+goal}}}{=}}}
 % kind of small matrices but not optimal.
 \newcommand{\colvec}[2][.8]{%
   \scalebox{#1}{%
     \renewcommand{\arraystretch}{.7}%
     $\begin{bmatrix}#2\end{bmatrix}$%
-  }
-}
+  } }
 
 \title{qk4cs}
 \author{}
@@ -57,7 +64,8 @@
 
 \section{Introduction}
 Physical system which has $d \in \mathbbm{N}$ possible distinguishable states.
-Its physical state $\ket{\psi} \in \mathscr{H}$, the Hilbert space $\mathbbm{C}^d$.
+Its physical state $\ket{\psi} \in \mathscr{H}$, the Hilbert space
+$\mathbbm{C}^d$.
 
 \begin{equation}
     \ket{\psi} = \begin{bmatrix} \psi_1\\ \psi_2 \\ \vdots \\ \psi_d\end{bmatrix}
@@ -66,11 +74,9 @@ Its physical state $\ket{\psi} \in \mathscr{H}$, the Hilbert space $\mathbbm{C}^
 
 
 \noindent
-The result of the measurement in the computational basis on
-$\ket{\psi}$
- is $i \in [1, \cdots, d]$ with probability $|\psi_i|^2$.
- \\ \noindent
-And $\sum_{i=1}^d |\psi_i|^2 = \braket{\psi|\psi} = 1$: the state is normalized.
+The result of the measurement in the computational basis on $\ket{\psi}$ is $i
+\in [1, \cdots, d]$ with probability $|\psi_i|^2$. \\ \noindent And
+$\sum_{i=1}^d |\psi_i|^2 = \braket{\psi|\psi} = 1$: the state is normalized.
 
 \subsection{Dirac notation}
 
@@ -93,8 +99,8 @@ And $\sum_{i=1}^d |\psi_i|^2 = \braket{\psi|\psi} = 1$: the state is normalized.
 $\braket{\psi|\phi} $ is the hermitian product of $\psi$ and $\phi$.
 \end{itemize}
 
-\subsection{Measurement in a basis \texorpdfstring{$B$}{Lg}}
-$B$ is an orthonormal basis : $B := \{\ket{b_i}\}_{i=1}^d$. B has the following properties:
+\subsection{Measurement in a basis \texorpdfstring{$B$}{Lg}} $B$ is an
+orthonormal basis : $B := \{\ket{b_i}\}_{i=1}^d$, with the following properties:
 \begin{equation}
     \begin{aligned}
         \forall i \braket{b_i|b_i} = \delta_{i, j} & \text{ \textit{ (orthonormality)}} \\
@@ -105,19 +111,20 @@ $B$ is an orthonormal basis : $B := \{\ket{b_i}\}_{i=1}^d$. B has the following 
 \begin{figure}[h]
 \centering
 \begin{quantikz}
-    \lstick{$\ket{\psi}$} & \qw & \meter{$B$} & \qw \arrow[r]
-    & \rstick{$i$} \qw
+    \lstick{$\ket{\psi}$} & \qw & \meter{$B$} & \qw \arrow[r] & \rstick{$i$} \qw
 \end{quantikz}
-\caption{Circuit representation of the measurement of the state $\ket{\psi}$}
+\caption{Circuit representation of the measurement of the state $\ket{\psi}$\\
+in the basis $B$.}
 \end{figure}
 
 \noindent
-The probability of the output of a measurement is given by the following formula :
+The probability of the output of a measurement is given by the following formula
+:
 \begin{equation}
     \mathbbm{P}(out=\ket{b_i}) = |\braket{b_i|\psi}|^2
 \end{equation}
-The physical object is projected into the state $\ket{b_i}$, this is physically called the
-"wave packet reduction".
+The physical object is projected into the state $\ket{b_i}$, this is physically
+called the "wave packet reduction".
 
 \subsubsection*{Qubit}
 \begin{equation}
@@ -135,12 +142,10 @@ The physical object is projected into the state $\ket{b_i}$, this is physically 
 \begin{figure}[h]
 \centering
 \begin{quantikz}
-    \lstick{$\ket{0}$} & \qw & \meter{$\pm$} & \qw \arrow[r]
-    & \rstick{$
+    \lstick{$\ket{0}$} & \qw & \meter{$\pm$} & \qw \arrow[r] & \rstick{$
         \begin{cases}
             +, & \text{w.p. $|\braket{+|0}|^2=\frac{1}{2}$}\\
-            -, & \text{w.p. $|\braket{-|0}|^2=\frac{1}{2}$}
-        \end{cases}$} \qw
+            -, & \text{w.p. $|\braket{-|0}|^2=\frac{1}{2}$} \end{cases}$} \qw
 \end{quantikz}
 \caption{Measure of the state $\ket{0}$ in the basis $\ket{\pm}$}
 \end{figure}
@@ -148,32 +153,32 @@ The physical object is projected into the state $\ket{b_i}$, this is physically 
 \subsection{Wiesner's Quantum Money}
 Based on the conjugate coding.
 
-\begin{itemize}
+\begin{itemize}[label=-]
     \item \texttt{bills}:
     \begin{itemize}
         \item serial number
-        \item a set of random qubit $E_r \in \{\ket{0}, \ket{1}, \ket{+}, \ket{-}\}^n$
-        \item \texttt{mint} knows $\{\text{Serial Number}+\text{Random}\}$, sends it to the bank.
+        \item a set of random qubit $E_r \in \{\ket{0}, \ket{1}, \ket{+},
+        \ket{-}\}^n$
+        \item \texttt{mint} knows $\{\text{Serial Number}+\text{Random}\}$,
+        sends it to the bank.
     \end{itemize}
     \item \texttt{Mint}: makes the bill, and gives it to the forger.
-    \item \texttt{Forger}: tries to copy the bill, and spends the two to the bank.
+    \item \texttt{Forger}: tries to copy the bill, and spends the two to the
+    bank.
     \item \texttt{Bank}: should accept the true one, reject the fake.
 \end{itemize}
 
 \begin{table}[h]
     \centering
     \begin{tabular}{c|c|c|c}
-    \texttt{mint} & \texttt{forger} basis & \texttt{forger} m. & \texttt{bank} m. \\
+    \texttt{mint} & \texttt{forger} basis & \texttt{forger} m. & \texttt{bank}
+    m. \\
     $\ket{0}$ & $\{\ket{0}, \ket{1}\}$ & $\ket{0}$ & $\ket{0} $\\
-    $\ket{0}$ & $\{\ket{\pm}\}$ &
-    $\begin{cases}
-        \ket{+}, & \text{w.p. $\frac{1}{2}$}\\
-        \ket{-}, & \text{w.p. $\frac{1}{2}$}
-    \end{cases}$ &
-    $\begin{cases}
-        \ket{0}, & \text{w.p. $\frac{1}{2}$}\\
-        \ket{1}, & \text{w.p. $\frac{1}{2}$}
-    \end{cases}$
+    $\ket{0}$ & $\{\ket{\pm}\}$ & $\begin{cases} \ket{+}, & \text{w.p.
+    $\frac{1}{2}$}\\
+        \ket{-}, & \text{w.p. $\frac{1}{2}$} \end{cases}$ & $\begin{cases}
+    \ket{0}, & \text{w.p. $\frac{1}{2}$}\\
+        \ket{1}, & \text{w.p. $\frac{1}{2}$} \end{cases}$
     \end{tabular}
 \end{table}
 
@@ -183,18 +188,18 @@ We therefore deduce that
 \end{equation}
 
 \subsection{Bennett and Brassard Quantum Key Exchange: BB84}
-Goal: Alice and Bob $\rightarrow$ share a secret bit string , Eve does not know anything.
-\\
-Settings: Alice and Bob share a quantum channel and an authenticated classical channel.
-\\\noindent
-Steps:
+Goal: Alice and Bob $\rightarrow$ share a secret bit string , Eve does not know
+anything. \\
+Settings: Alice and Bob share a quantum channel and an authenticated classical
+channel. \\\noindent Steps:
 \begin{enumerate}
-    \item Alice prepares $n$ qubits $E_r \in \{\ket{0}, \ket{1}, \ket{+}, \ket{-}\}^n$,
-    and she sends them to Bob
+    \item Alice prepares $n$ qubits $E_r \in \{\ket{0}, \ket{1}, \ket{+},
+    \ket{-}\}^n$, and she sends them to Bob
     \item Bob receives . He measures them in the basis $\{B_{0,1}, B_{+,-}\}$
-    \item They use the public classical channel to compare the basis Bob used. They throw away the \textit{bad basis} qubits.
-    \item Alice and Bob sample the data and compare the error rate $e$. If $e=0$, they keep the key;
-        if $e = 25\%$, Eve knows the key.
+    \item They use the public classical channel to compare the basis Bob used.
+    They throw away the \textit{bad basis} qubits.
+    \item Alice and Bob sample the data and compare the error rate $e$. If
+        $e=0$, they keep the key; if $e = 25\%$, Eve knows the key.
 \end{enumerate}
 What if $0 < e < 25$ ? Eve knows a part of the key.
 \section{Unitary transformation}
@@ -208,12 +213,12 @@ $T$ is linear.
     T(\alpha\ket{\psi} + \beta\ket{\phi}) = \alpha T(\ket{\psi}) + \beta T(\ket{\phi})
 \end{equation}
 
-$T$ acts like an unitary operator.
-$T$ corresponds to a complex matrix $U$: $T(\ket{\phi}) = U\ket{\phi}$, $U \in \mathbbm{C}^{n
-\times n}$,
-such that $U^\dagger U= Id$.
+$T$ acts like an unitary operator. $T$ corresponds to a complex matrix $U$:
+$T(\ket{\phi}) = U\ket{\phi}$, $U \in \mathbbm{C}^{n \times n}$, such that
+$U^\dagger U= Id$.
 
-In the basis $\{\ket{i}\}_{i=0}^n$,$\braket{T(\ket{\psi})|T(\ket{\psi})} = \braket{i|j} = \delta_{i,j}$
+In the basis $\{\ket{i}\}_{i=0}^n$,$\braket{T(\ket{\psi})|T(\ket{\psi})} =
+\braket{i|j} = \delta_{i,j}$
 %TODO : add the proof
 \\
 \\
@@ -227,17 +232,16 @@ Let's build a measurement in basis $\{\ket{b_i}\}_i$
 \begin{figure}[h]
     \centering
     \begin{quantikz}
-        \lstick{$\ket{\psi}$} & \qw & \gate{U} & \phase{U\ket{\psi}}&\meter{} & \qw \arrow[r]
-        & \rstick{$i$} \qw
+        \lstick{$\ket{\psi}$} & \qw & \gate{U} & \phase{U\ket{\psi}}&\meter{} &
+        \qw \arrow[r] & \rstick{$i$} \qw
     \end{quantikz}
     \caption{Circuit representation of the measurement unitary exptected behavior}
 \end{figure}
 \begin{equation}
     \mathbbm{P}(i) \eqdef |\braket{i|U|\psi}|^2 \eqgoal |\braket{b_i|\psi}|^2 \quad \forall \psi
 \end{equation}
-
-We want $\bra{i}U=\bra{b_i} \Leftrightarrow U^\dagger\ket{i} = \ket{b_i} \Leftrightarrow U
-= \sum_i \ket{i}\bra{b_i}$
+We want $\bra{i}U=\bra{b_i} \Leftrightarrow U^\dagger\ket{i} = \ket{b_i}
+\Leftrightarrow U = \sum_i \ket{i}\bra{b_i}$
 % TODO : add the proof
 
 Is $U$ an unitary ?
@@ -252,9 +256,9 @@ Is $U$ an unitary ?
 \end{equation}
 
 \section{Composition of systems}
-Let $A \in \mathscr{H}_A = \mathbbm{C}^{d_A}$ and $B \in \mathscr{H}_B = \mathbbm{C}^{d_B}$
-to be two systems in their respective vector spaces.
-Then we can construct the space
+Let $A \in \mathscr{H}_A = \mathbbm{C}^{d_A}$ and $B \in \mathscr{H}_B =
+\mathbbm{C}^{d_B}$ to be two systems in their respective vector spaces. Then we
+can construct the space
 \begin{equation}
     \mathscr{H}_{AB} = \mathscr{H}_A \otimes \mathscr{H}_B
 \end{equation}
@@ -262,21 +266,20 @@ Its orthonormal basis is $\{\ket{ij}_{AB}\}_{i, j}$, and
 \begin{equation}
     \text{dim}\mathscr{H}_{AB} = \text{dim}\mathscr{H}_A \cdot \text{dim}\mathscr{H}_B
 \end{equation}
-\\\noindent
-If $\ket{\alpha} = \sum_i\alpha_i\ket{i}_A$ and $\ket{\beta} = \sum_i\beta_i\ket{i}_B$,
-then
+\\\noindent If $\ket{\alpha} = \sum_i\alpha_i\ket{i}_A$ and $\ket{\beta} =
+\sum_i\beta_i\ket{i}_B$, then
 \begin{equation}
     \ket{\phi}_{AB}=\ket{\alpha} \otimes \ket{\beta} = \sum_{i,j}\alpha_i\beta_j\ket{i}_A\ket{j}_B
 \end{equation}
 
-and $\ket{\phi}_{AB} \in \mathscr{H}_{AB}$. $\ket{\phi}_{AB}$ is a joint state of systems $A$ and $B$.
-\\\noindent
-The inner product between two basis states can be defined as
+and $\ket{\phi}_{AB} \in \mathscr{H}_{AB}$. $\ket{\phi}_{AB}$ is a joint state
+of systems $A$ and $B$. \\\noindent The inner product between two basis states
+can be defined as
 \begin{equation}
     \braket{i,j|k,l}=\braket{i|k}_A\braket{j|l}_B = \delta_{ik}\delta_{jl}
 \end{equation}
-\\\noindent
-The most general state in the space $\mathscr{H}_{AB}$ can be written
+\\\noindent The most general state in the space $\mathscr{H}_{AB}$ can be
+written
 \begin{equation}
     \ket{\psi} = \alpha \ket{00} + \beta \ket{01} + \gamma \ket{10} + \delta \ket{11}
 \end{equation}
@@ -284,15 +287,16 @@ with the usual condition for $\ket{\psi}$ to be normalized:
 \begin{equation}
     |\alpha|^2+|\beta|^2+|\gamma|^2+|\delta|^2 = 1
 \end{equation}
-\\\noindent
-Not all states of $\mathscr{H}_{AB}$ are separable into one state of $\mathscr{H}_{A}$
-and one state of $\mathscr{H}_{B}$
+\\\noindent Not all states of $\mathscr{H}_{AB}$ are separable into one state of
+$\mathscr{H}_{A}$ and one state of $\mathscr{H}_{B}$
 
-For example : $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11}) \in \mathscr{H}_{AB}$, but
-$\nexists \ket{\alpha}\in \mathscr{H}_A, \ket{\beta}\in \mathscr{H}_B$, such that \\\noindent
-$\ket{\alpha}\otimes\ket{\beta} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$.
+For example : $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11}) \in \mathscr{H}_{AB}$,
+but $\nexists \ket{\alpha}\in \mathscr{H}_A, \ket{\beta}\in \mathscr{H}_B$, such
+that \\\noindent $\ket{\alpha}\otimes\ket{\beta} = \frac{1}{\sqrt{2}}(\ket{00} +
+\ket{11})$.
 
-Necessary condition on the coefficients $(\alpha, \beta, \gamma, \delta)$ of a state to be separable:
+Necessary condition on the coefficients $(\alpha, \beta, \gamma, \delta)$ of a
+state to be separable:
 \begin{equation}
     \alpha\delta = \beta\gamma
 \end{equation}
@@ -300,22 +304,20 @@ Necessary condition on the coefficients $(\alpha, \beta, \gamma, \delta)$ of a s
 %TODO : add the part about the partial measurement
 \subsection{No cloning theorem}
 \begin{theorem}
-    There is no unitary $U$ such that
-    $\forall \ket{\psi} \in \mathscr{H}, U\ket{\psi}
-    = \ket{\psi} \otimes \ket{\psi}
-    \in \mathscr{H} \otimes \mathscr{H}$.
+    There is no unitary $U$ such that $\forall \ket{\psi} \in \mathscr{H},
+    U\ket{\psi} = \ket{\psi} \otimes \ket{\psi} \in \mathscr{H} \otimes
+    \mathscr{H}$.
 \end{theorem}
 \paragraph{Proof: }
 Suppose there exists a such unitary U, then U is a cloning operator.
 \begin{equation}
     \begin{aligned}
-        U\ket{0} \eqdef \ket{0}\ket{0} \\
-        U\ket{1} \eqdef \ket{1}\ket{1}
+        \forall \ket{\psi}, U\ket{\psi} \eqdef \ket{\psi}\ket{\psi}
     \end{aligned}
 \end{equation}
 
-By computing the application of $U$ on the state $\ket{+}$, we get on the one hand, by linearity of
-unitaries.
+By computing the application of $U$ on the state $\ket{+}$, we get on the one
+hand, by linearity of unitaries.
 \begin{equation}
     U(\frac{\ket{0}+\ket{1}}{\sqrt{2}}) = \frac{\ket{00}+\ket{11}}{\sqrt{2}}
 \end{equation}
@@ -330,13 +332,14 @@ and on the other hand, by definition of the operator behavior
 which is a contradiction. Then such a $U$ operator can not exist.
 
 \subsection{Superdense coding}
-\textit{Superdense coding} involves two parties, \texttt{Alice} and \texttt{Bob}.
-The protocol allows \texttt{Alice} and \texttt{Bob} to share two bits of information by
-exchanging just one qubit.
-Basically, \texttt{Alice} is in possession of two classical bits of information, which she
-wishes to send to \texttt{Bob}.
+\textit{Superdense coding} involves two parties, \texttt{Alice} and
+\texttt{Bob}. The protocol allows \texttt{Alice} and \texttt{Bob} to share two
+bits of information by exchanging just one qubit. Basically, \texttt{Alice} is
+in possession of two classical bits of information, which she wishes to send to
+\texttt{Bob}.
 
-Suppose \texttt{Alice} and \texttt{Bob} initially share a pair of qubits in the entangled state
+Suppose \texttt{Alice} and \texttt{Bob} initially share a pair of qubits in the
+entangled state
 \begin{equation}
     \ket{\psi} = \frac{\ket{00} + \ket{11}}{\sqrt{2}}
 \end{equation}
@@ -346,7 +349,8 @@ Here is the procedure.
 \begin{table}[h]
     \centering
     \begin{tabular}{c|c|c}
-    The state \texttt{Alice} wants to send & The gate she applies & The states after \\
+    The state \texttt{Alice} wants to send & The gate she applies & The states
+    after \\
     00 & $I$ & $\frac{\ket{00} + \ket{11}}{\sqrt{2}} = \ket{\phi^+}$  \\
     01 & $Z$ & $\frac{\ket{00} - \ket{11}}{\sqrt{2}} = \ket{\phi^-}$ \\
     10 & $X$ & $\frac{\ket{10} + \ket{01}}{\sqrt{2}} = \ket{\psi^+}$ \\
@@ -354,10 +358,11 @@ Here is the procedure.
     \end{tabular}
 \end{table}
 
-\texttt{Alice} send her qubit to \texttt{Bob} and he measures the resulting pair in the base \\
-$\{\ket{\phi^+}, \ket{\phi^-},\ket{\psi^+}, \ket{\psi^-}\}$. This is indeed a basis, and
-its name is the \textit{Bell basis},
-and the states are called the \textit{Bell states}.
+\texttt{Alice} send her qubit to \texttt{Bob} and he measures the resulting pair
+in the base \\
+$\{\ket{\phi^+}, \ket{\phi^-},\ket{\psi^+}, \ket{\psi^-}\}$. This is indeed a
+basis, and its name is the \textit{Bell basis}, and the states are called the
+\textit{Bell states}.
 
 
 \subsection{Quantum teleportation}
@@ -371,34 +376,36 @@ Projectors properties:
 \begin{equation}
     \forall j, \Pi_j^2 = \Pi_j \qquad \Pi_j\Pi_i = \delta_{i,j}\Pi_j
 \end{equation}
-\\\noindent
-A projector is defined as follows:
+\\\noindent A projector is defined as follows:
 \begin{equation}
     \Pi_j = \sum_{l=1}^{d_j}\ket{l_l^j}\bra{l_l^j}
 \end{equation}
-Upon measuring the state $\ket{\psi}$, the probability of getting result $j$ is given by
+Upon measuring the state $\ket{\psi}$, the probability of getting result $j$ is
+given by
 \begin{equation}
     \braket{\psi|\Pi_j|\psi} = \| \Pi_j\ket{\psi}\|^2
 \end{equation}
-Given that outcome $j$ occured, the state of the quantum system immediately after the measurement is
+Given that outcome $j$ occured, the state of the quantum system immediately
+after the measurement is
 \begin{equation}
     \frac{\Pi_j\ket{\psi}}{\| \Pi_j\ket{\psi}\|^2}
 \end{equation}
 
 \subsection{Observables}
 Observables correspond to physical quantities, with values in $\mathbbm{R}$.
-They are well defined in a basis $\{\ket{b_i}\}_i$ (i.e $\forall \ket{b_i}, \exists a_i
-\in \mathbbm{R})$
+They are well defined in a basis $\{\ket{b_i}\}_i$ (i.e $\forall \ket{b_i},
+\exists a_i \in \mathbbm{R})$
 
-\paragraph{Note :} $\alpha\ket{b_1} + \beta\ket{b_2}$ has \textbf{not always} a well defined value.
-
+\paragraph{Note :} $\alpha\ket{b_1} + \beta\ket{b_2}$ has \textbf{not always} a
+well defined value. \\
+\\
 An observable is defined as follow:
 \begin{equation}
     O \eqdef \sum_i o_i \underbrace{\ket{b_i}\bra{b_i}}_{\text{projector on $\ket{b_i}$}}
     = \sum_j o_j \Pi_j
 \end{equation}
 $O$ is diagonalizable by definition and $O^\dagger = O$: $O$ is hermitian.
-$$
+\begin{equation}
 \text{Shape of $O$ } :
 \begin{pmatrix}
     o_1 & 0 & \cdots & 0 \\
@@ -406,10 +413,12 @@ $$
     \vdots  & \vdots  & \ddots & \vdots  \\
     0 & \cdots & \cdots & a_d
 \end{pmatrix}
-$$
-
-The probability of getting the result $i$ by measuring $O$ on a state $\ket{\psi}$ is
-$\braket{\psi|\Pi_i|\psi}$
+\end{equation}
+The probability of getting the result $i$ by measuring $O$ on a state
+$\ket{\psi}$ is
+\begin{equation}
+\mathbbm{P}\braket{\psi|\Pi_i|\psi}
+\end{equation}
 \subsubsection*{Expectation value and standard deviation}
 
 The expectation value of $O$, written $\langle O\rangle$, is given by
@@ -424,14 +433,14 @@ The expectation value of $O$, written $\langle O\rangle$, is given by
     \end{aligned}
 \end{equation}
 
-From this formula for the expectation value follows a formula for the standard deviation
-associated to the observation of $O$
+From this formula for the expectation value follows a formula for the standard
+deviation associated to the observation of $O$
 \begin{equation}
     \Delta^2 O = \langle(O - \langle O \rangle)^2\rangle = \langle O^2 \rangle - \langle O \rangle^2
 \end{equation}
 
-\paragraph{Note:} If $\ket{\psi}$ is an eigenstate of $O$, then $O\ket{\psi} = \lambda \ket{\psi}$.
-\\
+\paragraph{Note:} If $\ket{\psi}$ is an eigenstate of $O$, then $O\ket{\psi} =
+\lambda \ket{\psi}$. \\
 Hence:
 \begin{equation}
     \begin{aligned}
@@ -454,27 +463,28 @@ And:
 
 \subsubsection*{Commutators}
 A key property of quantum physics is the existence of incompatible measurements:
-for any physical property $A$, there exists another physical property $B$ which is incompatible
-with $A$. The incompatible means it is physically impossible to prepare a state $\ket{\psi}$
-which gives perfectly predictible outputs for both measurements $A$ and $B$.
-Let us first assume $A$ and $B$ to be observables.
-A key property of this pair of observable is their commutator
+for any physical property $A$, there exists another physical property $B$ which
+is incompatible with $A$. The incompatible means it is physically impossible to
+prepare a state $\ket{\psi}$ which gives perfectly predictible outputs for both
+measurements $A$ and $B$. Let us first assume $A$ and $B$ to be observables. A
+key property of this pair of observable is their commutator
 \begin{equation}
     [A,B]:= AB-BA
 \end{equation}
 
-If $A$ and $B$ commute (i.e $[A,B]=0 \Leftrightarrow AB = BA$), there exists a basis
-such that the result of a measurement of $A$ and a measurement of $B$ are perfectly defined.
+If $A$ and $B$ commute (i.e $[A,B]=0 \Leftrightarrow AB = BA$), there exists a
+basis such that the result of a measurement of $A$ and a measurement of $B$ are
+perfectly defined.
 
 Conversely, if such a basis exists, then $[A,B]=0$
 
-Therefore, if $A$ and $B$ do not commute, they correspond to incompatible measurements.
-(The proofs are in the $4^{th}$ tutorial.)
+Therefore, if $A$ and $B$ do not commute, they correspond to incompatible
+measurements. (The proofs are in the $4^{th}$ tutorial.)
 
 \subsubsection*{The Robertson-Heisenberg uncertainty relation}
-This relation evaluates the sharpness of two observables we will call $A$ and $B$ through
-the standard deviations $\Delta A$ and $\Delta B$, and the states that, for any state $\ket{\psi}$
-and any observable $A$ and $B$
+This relation evaluates the sharpness of two observables we will call $A$ and
+$B$ through the standard deviations $\Delta A$ and $\Delta B$, and the states
+that, for any state $\ket{\psi}$ and any observable $A$ and $B$
 
 \begin{equation}
     \Delta A \Delta B \geq \frac{1}{2}|\braket{\psi|[A,B]|\psi}
@@ -492,14 +502,9 @@ Using the Pauli matrix $\sigma_x = X =
     0 & 1 \\
     1 & 0
     \end{bmatrix}
-    = \ket{+}\bra{+} - \ket{-}\bra{-}
-    $.
-\\\noindent
-Known results : $X\ket{+} = \ket{+}$ and $X\ket{-}=-\ket{-}$.
-\\\noindent
-We define $\ket{\theta}:=\cos\theta\ket{0}+\sin\theta\ket{1}$
-\\\noindent
-Then
+    = \ket{+}\bra{+} - \ket{-}\bra{-} $. \\\noindent Known results : $X\ket{+} =
+    \ket{+}$ and $X\ket{-}=-\ket{-}$. \\\noindent We define
+    $\ket{\theta}:=\cos\theta\ket{0}+\sin\theta\ket{1}$ \\\noindent Then
 \begin{equation}
     \begin{aligned}
         \langle X \rangle_{\ket{\theta}}
@@ -508,7 +513,7 @@ Then
                 \begin{bmatrix}0 & 1 \\ 1 & 0 \end{bmatrix}
                 \begin{bmatrix} \cos \theta\\ sin \theta \end{bmatrix} \\
             & = 2 \sin\theta\cos\theta \\
-            & = sin 2\theta
+            & = \sin (2\theta)
     \end{aligned}
 \end{equation}
 
@@ -518,21 +523,22 @@ A generalized measurement is defined by
 \begin{equation}
     \{K_i\}_i \text{ such that } \sum_i K_i^\dagger K_i=Id
 \end{equation}
-where the $K_i$ are called Kraus Operators.
-The probability of getting the result $i$ from a general measurement operator is given by
-$\mathbbm{P}(i) = \|K_i\ket{\psi}\|^2$
-, and the state of the system just after the measurement is $K_i\ket{\psi}=\frac{K_i\ket{\psi}}{\|K_i\ket{\psi}\|^2}$
+where the $K_i$ are called Kraus Operators. The probability of getting the
+result $i$ from a general measurement operator is given by $\mathbbm{P}(i) =
+\|K_i\ket{\psi}\|^2$ , and the state of the system just after the measurement is
+$K_i\ket{\psi}=\frac{K_i\ket{\psi}}{\|K_i\ket{\psi}\|^2}$
 
 \subsubsection*{Generalized measurement $\rightarrow$ Operator}
-If $i \in \{1\}$ then
-$K_1^\dagger K_1=Id \Rightarrow K_1$ is unitary.%FIXME: not sure of that.
+If $i \in \{1\}$ then $K_1^\dagger K_1=Id \Rightarrow K_1$ is
+unitary.%FIXME: not sure of that.
 
 \subsubsection*{Generalized measurement $\rightarrow$ Set of projectors}
-If $K_i := \Pi_i$ then $\sum_i K_i^\dagger K_i = \sum_i \Pi_i^\dagger\Pi_i = \sum_i \Pi_i = Id$
+If $K_i := \Pi_i$ then $\sum_i K_i^\dagger K_i = \sum_i \Pi_i^\dagger\Pi_i =
+\sum_i \Pi_i = Id$
 
 \subsubsection*{Example}
-With prob. $P_j$, I measure $\{\Pi_{ij}\}_i \text{ } (\sum_i \Pi_{ij} = Id)$ and I measure
-$U_j$ on the output state.
+With prob. $P_j$, I measure $\{\Pi_{ij}\}_i \text{ } (\sum_i \Pi_{ij} = Id)$ and
+I measure $U_j$ on the output state.
 %TODO : add the scheme
 Probability of getting $ij$ :
 \begin{equation}
@@ -543,7 +549,8 @@ Probability of getting $ij$ :
     \end{aligned}
 \end{equation}
 \noindent
-And the resulting state is $\dfrac{U\Pi_{ij}\ket{\psi}}{\|\Pi_{ij}\ket{\psi}\|^2}$
+And the resulting state is
+$\dfrac{U\Pi_{ij}\ket{\psi}}{\|\Pi_{ij}\ket{\psi}\|^2}$
 
 \noindent
 Let $\{K_{ij} =\sqrt{P_j} U \Pi_{ij}\}_{ij}$, then
@@ -561,36 +568,24 @@ Can we associate each set $\{K_i\}_i$ with a $U$ and a $\{\Pi_i\}_i$ ?
 \begin{figure}[h]
     \centering
 \begin{quantikz}
-        \lstick{$\ket{\psi}_I$}
-        & \qw \gategroup[2,steps=5,style={dashed,rounded corners,fill=blue!20, inner
-        xsep=2pt},background]{{\sc $\{K_i\}_i$}}
-        & \qw
-        & \qw
-        & \gate[2]{U}
-        & \qw\arrow[r]
-        &
-        & \text{ouput $o$}
-        \\
-        &
-        &
-        & \lstick{   $\ket{0}_A$}
-        & \qw
-        & \meter{M$\{\ket{i}\}$}
-        & \qw \arrow[r]
-        & \text{ }i
+        \lstick{$\ket{\psi}_I$} & \qw \gategroup[2,steps=5,style={dashed,rounded
+        corners,fill=blue!20, inner xsep=2pt},background]{{\sc $\{K_i\}_i$}} &
+        \qw & \qw & \gate[2]{U} & \qw\arrow[r] & & \text{ouput $o$} \\
+        & & & \lstick{   $\ket{0}_A$} & \qw & \meter{M$\{\ket{i}\}$} & \qw
+        \arrow[r] & \text{ }i
     \end{quantikz}
     \caption{Circuit representation of such $U$ and $\{\Pi_i\}_i$. \\
-    Note: $\mathscr{H}_A\otimes \mathscr{H}_I = \mathscr{H}_O\otimes\mathscr{H}_M$}
+    Note: $\mathscr{H}_A\otimes \mathscr{H}_I =
+    \mathscr{H}_O\otimes\mathscr{H}_M$}
 \end{figure}
-\\\noindent
-$\forall i,$ the output state of the system is
+\\\noindent $\forall i,$ the output state of the system is
 \begin{equation}
     \label{output-state-kraus}
     (I_o \otimes \ket{i}_M\bra{i})U\ket{\psi}\otimes\ket{0}_A = \ket{i}_M\braket{i|U|0}_A\ket{\psi}_I
 \end{equation}
-Assume $K_i = _M\braket{i|U|0}_A$. With (\ref{output-state-kraus}), we deduce that the output state is
-$K_i\ket{\psi}$, w.p. $\braket{\psi|K_i^\dagger K_i|\psi}$.
-Is $\{K_i\}_i$ a valid set of operators ?
+Assume $K_i = _M\braket{i|U|0}_A$. With (\ref{output-state-kraus}), we deduce
+that the output state is $K_i\ket{\psi}$, w.p. $\braket{\psi|K_i^\dagger
+K_i|\psi}$. Is $\{K_i\}_i$ a valid set of operators ?
 \begin{equation}
     \begin{aligned}
         \sum_i K_i^\dagger K_i
@@ -610,11 +605,10 @@ Is $\{K_i\}_i$ a valid set of operators ?
     \end{aligned}
 \end{equation}
 
-\subsubsection*{$\{K_i\}_i \rightarrow$ Unitary}
-Let $U := \sum_i K_i \otimes \ket{i}_{MA}\bra{0} + \cdots $.
-The $\cdots$ represents extra terms used to make $U$ a unitary, but can be neglected in the
-computation.
-By tensoring with $\ket{0}_A$, we obtain
+\subsubsection*{$\{K_i\}_i \rightarrow$ Unitary} Let $U := \sum_i K_i \otimes
+\ket{i}_{MA}\bra{0} + \cdots $. The $\cdots$ represents extra terms used to make
+$U$ a unitary, but can be neglected in the computation. By tensoring with
+$\ket{0}_A$, we obtain
 \begin{equation}
     U\ket{\psi}\otimes \ket{0}_A = \sum_i K_i \ket{\psi}\otimes\ket{i}
 \end{equation}
@@ -632,14 +626,14 @@ And then
     \end{aligned}
 \end{equation}
 \subsection{POVMs}
-POVMs means Projective Operator Valued Measure: differently from
-the projective measurements, the POVM does not define the post-measurement state.\\
+POVMs means Projective Operator Valued Measure: differently from the projective
+measurements, the POVM does not define the post-measurement state.\\
 Recall that the probability of getting $i$, when the state is $\ket{\psi}$ is
 \begin{equation}
 \braket{\psi | K_i^\dagger K_i | \psi}
 \end{equation}
-Then let $E_i = K_i^\dagger K_i$.\\\noindent
-POVMs are then defined by the set $\{E_i\}_i$, such that
+Then let $E_i = K_i^\dagger K_i$.\\\noindent POVMs are then defined by the set
+$\{E_i\}_i$, such that
 \begin{equation}
 \sum_i E_i = Id, \quad E_i\geq 0
 \end{equation}
@@ -650,7 +644,8 @@ This implies that $E_i$ is hermitian, and all its eigenvalues are $\geq 0$.
 \begin{lemma}
 The global phase is irrelevant.
 \end{lemma}
-Of couse, the state $\ket{\psi} \neq e^{i\phi}\ket{\psi}$
+Of couse, the state $\ket{\psi}$ is different from the state
+$e^{i\phi}\ket{\psi}$
 
 \paragraph{Proof: }
 First, we have
@@ -658,16 +653,13 @@ First, we have
     |\braket{\psi|e^{i\phi}|\psi}|^2 = |e^{i\phi}|^2 = 1
 \end{equation}
 
-Using the generalized measurements $\{K_i\}_i$ such that $\sum_i K_i = Id$
-\\\noindent
-Then:
+Using the generalized measurements $\{K_i\}_i$ such that $\sum_i K_i^\dagger K_i
+= Id$ \\\noindent Then:
 \begin{equation}
     K_ie^{i\phi}\ket{\psi} = e^{i\phi}K_i\ket{\psi}
 \end{equation}
 \noindent
-The phase of the input is the same as the phase of the output.
-\\\noindent
-And
+The phase of the input is the same as the phase of the output. \\\noindent And
 \begin{equation}
     \begin{aligned}
         \|K_ie^{i\phi}\ket{\psi}\|^2_2
@@ -677,29 +669,27 @@ And
             \end{cases}
     \end{aligned}
 \end{equation}
-\\\noindent
-Hence, the global phase is irrelevant, and there is no way to measure the global phase.
-\\\noindent
-However, the relative phase is important for later computations.
+\\\noindent Hence, the global phase is irrelevant, and there is no way to
+measure the global phase. \\\noindent However, the relative phase is important
+for later computations.
 \begin{equation}
     \frac{1}{\sqrt{2}}(\ket{0}+\underbrace{e^{i\phi}}_{\text{relative phase}}\ket{1})
 \end{equation}
 
 \subsection{General quantum state}
 \subsubsection*{Number of parameters to describe a quantum state}
-Let $\mathscr{H} = \mathbbm{C^d}$ and $\ket{\psi} \in \mathscr{H}: \ket{\psi}
-= \sum_{i=0}^d \alpha_i \ket{i}$
-, (with $\alpha_i \in \mathbbm{C}$ and $\sum_i |\alpha_i|^2=1$).
-If we consider $\alpha_i \in \mathbbm{R}$
-is the global phase, then $2d-2$ real parameters are needed to represent the quantum state.
+Let $\mathscr{H} = \mathbbm{C^d}$ and $\ket{\psi} \in \mathscr{H}: \ket{\psi} =
+\sum_{i=0}^d \alpha_i \ket{i}$ , (with $\alpha_i \in \mathbbm{C}$ and $\sum_i
+|\alpha_i|^2=1$). If we consider $\alpha_i \in \mathbbm{R}$ is the global phase,
+then $2d-2$ real parameters are needed to represent the quantum state.
 
 \subsubsection*{Example}
 Qubit in $\mathscr{H}$:
 \begin{itemize}[label=-]
-    \item $d=2 \rightarrow 2\cdot2-2 = 2$ right parameters : $(\theta, \varphi)$.
+    \item $d=2 \rightarrow 2\cdot2-2 = 2$ real parameters : $(\theta, \varphi)$.
     \item $d=3 \rightarrow 4$ real parameters.
 \end{itemize}
-A quantum state can be written, with the parameters $\theta$ and $\varphi$ as
+A quantum state can be written, with the parameters $\theta$ and $\varphi$, as
 \begin{equation}
     \ket{\theta, \varphi} = \cos \frac{\theta}{2}\ket{0} + e^{i\varphi}\sin \frac{\theta}{2}\ket{1}
 \end{equation}
@@ -748,13 +738,15 @@ Are $\vec{m}$ and $\vec{-m}$ orthogonal ?
             & = 0
     \end{aligned}
 \end{equation}
-Orthogonal states in the Hilbert space correspond to opposite vectors in the Bloch sphere.
+Orthogonal states in the Hilbert space correspond to opposite vectors in the
+Bloch sphere.
 
 %TODO: add the part (and the sketch) about the mixed states
 
 \section{Pauli operators}
 \subsection{Pauli matrices and properties}
-There are four extremely useful two by two matrices called the \textit{Pauli matrices}.
+There are four extremely useful two by two matrices called the \textit{Pauli
+matrices}.
 $$
 \begin{aligned}
     \sigma_0 \equiv I \equiv &
@@ -791,7 +783,7 @@ $$
             \\
             \sigma_y & = -i\ket{0}\bra{1} + i\ket{1}\bra{0}
             \\
-            \sigma_z & = \ket{0}\bra{1} - \ket{1}\bra{1}
+            \sigma_z & = \ket{0}\bra{0} - \ket{1}\bra{1}
         \end{aligned}
     \end{equation}
     \item commutation relation % may put this in the commutator section
@@ -840,16 +832,13 @@ $$
 
 
 \paragraph{Note: } The average value corresponds to the associated coordinates:
- $\vec{m} = \begin{bmatrix}
-    \braket{X} \\ \braket{Y} \\ \braket{Z}
-\end{bmatrix}$. The set $(X, Y, Z)$ is tomographically complete.
+ $\vec{m} = \begin{bmatrix} \braket{X} \\ \braket{Y} \\ \braket{Z}
+ \end{bmatrix}$. The set $(X, Y, Z)$ is tomographically complete.
 
 \subsubsection*{Pauli matrices as unitary}
 
 \begin{itemize}[label=-]
-    \item $\sigma_z = \begin{bmatrix}
-        1 & 0 \\ 0 & -1
-    \end{bmatrix}$
+    \item $\sigma_z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}$
     \begin{equation}
         \begin{aligned}
             \sigma_z\ket{\theta, \varphi}
@@ -861,24 +850,20 @@ $$
     \end{equation}
     It is a rotation of an angle $\pi$ around the $z$ axis on the Bloch sphere.
 
-    \item $\sigma_x = \begin{bmatrix}
-        0 & 1 \\ 1 & 0
-    \end{bmatrix}$
+    \item $\sigma_x = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}$
     \begin{equation}
         \begin{aligned}
             \sigma_x\ket{\theta, \varphi}
                 & = e^{i\varphi}\sin\frac{\theta}{2}\ket{0} + \cos\frac{\theta}{2}\ket{1} \\
-                & = e^{i\varphi}(\cos\frac{\pi-\theta}{2}\ket{0} +
-                e^{-i\varphi}\sin\frac{\pi-\theta}{2}\ket{1}) \\
+                & = e^{i\varphi}\cos\frac{\pi-\theta}{2}\ket{0} +
+                e^{-i\varphi}\sin\frac{\pi-\theta}{2}\ket{1} \\
                 & = e^{i\varphi}\ket{\pi - \theta, -\varphi} \\
                 & = R_x(\pi)\ket{\theta, \pi}
         \end{aligned}
     \end{equation}
 
     % Not sure of this
-    \item $\sigma_y = \begin{bmatrix}
-        0 & -i \\ i & 0
-    \end{bmatrix}$
+    \item $\sigma_y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}$
     \begin{equation}
         \begin{aligned}
             \sigma_y\ket{\theta, \varphi}
@@ -887,7 +872,7 @@ $$
                 & = ie^{i(\pi+\varphi)}\Big(e^{-i(\pi+\varphi)}
                 \cos\frac{\theta}{2}\ket{1}+\sin\frac{\theta}{2}\ket{0}\Big) \\
                 & = ie^{i(\pi+\varphi)}\Big(\cos\frac{\theta-\pi}{2}
-                \ket{1}+e^{-i(\pi-\varphi)}\sin\frac{\pi-\theta}{2}\ket{1}) \\
+                \ket{1}+e^{-i(\pi-\varphi)}\sin\frac{\pi-\theta}{2}\ket{1}\Big) \\
                 & = ie^{i(\pi+\varphi)}\ket{\pi+\theta, -\pi-\theta} \\
                 & = R_x(\pi)\ket{\theta, \varphi}
         \end{aligned}
@@ -897,9 +882,9 @@ $$
 
 
 \subsubsection*{Pauli Group}
-The Pauli group is defined by the set $G_1 = \{\eta I, \eta\sigma_x, \eta\sigma_y,
-\eta\sigma_z\}_{\eta\in\{\pm 1, \pm i\}}$.
-\begin{itemize}
+The Pauli group is defined by the set $G_1 = \{\eta I, \eta\sigma_x,
+\eta\sigma_y, \eta\sigma_z\}_{\eta\in\{\pm 1, \pm i\}}$.
+\begin{itemize}[label=-]
     \item they are their own inverse : $\sigma_i^{-1}=\sigma_i$
     \item their product is in $G_1$:
     \begin{itemize}
@@ -907,15 +892,17 @@ The Pauli group is defined by the set $G_1 = \{\eta I, \eta\sigma_x, \eta\sigma_
         \item $\sigma_y\sigma_z=i\sigma_x=-\sigma_z\sigma_y$
         \item $\sigma_z\sigma_x=i\sigma_y=-\sigma_x\sigma_z$
     \end{itemize}
-    \item the Pauli matrices anti-commute: $\{\sigma_i, \sigma_j\} = 0, \forall i \neq j$
+    \item the Pauli matrices anti-commute: $\{\sigma_i, \sigma_j\} = 0, \forall
+    i \neq j$
 \end{itemize}
 
-\section{Generic observables}
-\subsection{Projector onto \texorpdfstring{$\vec{m}$}{Lg}
-for an arbitrary vector \texorpdfstring{$\ket{\theta, \varphi}$}{Lg}}
+\section{Generic observable}
+\subsection{Projector onto \texorpdfstring{$\vec{m}$}{Lg} for an arbitrary
+vector \texorpdfstring{$\ket{\theta, \varphi}$}{Lg}}
 
-Following the definition (\ref{def-vect-m}) of the vector $\vec{m}$, we can define a projector onto
-the vector $\vec{m}$ for any arbitrary state $\ket{\theta, \varphi}$.
+Following the definition (\ref{def-vect-m}) of the vector $\vec{m}$, we can
+define a projector onto the vector $\vec{m}$ for any arbitrary state
+$\ket{\theta, \varphi}$.
 
 \begin{equation}
     \begin{aligned}
@@ -944,11 +931,11 @@ the vector $\vec{m}$ for any arbitrary state $\ket{\theta, \varphi}$.
         1+w & u-iw \\ u+iw & 1-w
     \end{bmatrix}
 \end{equation}
-
-but (\ref{projector-onto-m}) is a more convinient notation.
+but the result found on (\ref{projector-onto-m}) is a more convinient notation.
 
 \subsection{Generic observable}
-Let $\sigma_{\vec{m}}:=1\ket{\vec{m}}\bra{\vec{m}}-1\ket{-\vec{m}}\bra{-\vec{m}}$.
+Let
+$\sigma_{\vec{m}}:=1\ket{\vec{m}}\bra{\vec{m}}-1\ket{-\vec{m}}\bra{-\vec{m}}$.
 (recall from (\ref{m-m-orthogonal}), $\vec{m}$ and $-\vec{m}$ are orthogonal).
 
 \begin{equation}
@@ -960,7 +947,8 @@ Let $\sigma_{\vec{m}}:=1\ket{\vec{m}}\bra{\vec{m}}-1\ket{-\vec{m}}\bra{-\vec{m}}
     \end{aligned}
 \end{equation}
 \noindent
-We have $\sigma_{\vec{m}}=\vec{m}\vec{\sigma}$ and $\sigma_{\vec{m}}^\dagger=\sigma_{\vec{m}}$.
+We have $\sigma_{\vec{m}}=\vec{m}\vec{\sigma}$ and
+$\sigma_{\vec{m}}^\dagger=\sigma_{\vec{m}}$.
 
 \begin{equation}
     \begin{aligned}
@@ -984,9 +972,9 @@ $\sigma_{\vec{m}}$ corresponds to a rotation around the $\vec{m}$ axis.
 \end{equation}
 
 \subsection{Arbitrary rotation}
-The Pauli matrices $X$, $Y$ and $Z$ are so-called because when they are exponentiated,
-they give rise to the \textit{rotation operators}, which rotate the Bloch vector $\vec{m}$
-around the $x, y$ and $z$ axis:
+The Pauli matrices $X$, $Y$ and $Z$ are so-called because when they are
+exponentiated, they give rise to the \textit{rotation operators}, which rotate
+the Bloch vector $\vec{m}$ around the $x, y$ and $z$ axis:
 \begin{equation}
     \begin{aligned}
         R_x & \equiv e^{-i\frac{\theta}{2}X} \\
@@ -1008,8 +996,8 @@ And we can build an unitary that express the hamiltonian
         e^{i\omega\frac{t}{2}} & \cdot \\ \cdot & e^{i\omega\frac{t}{2}}
     \end{bmatrix}
 \end{equation}
-By measuring the hamiltonian over time on the general state $\ket{\theta, \varphi}$,
-we get that
+By measuring the hamiltonian over time on the general state $\ket{\theta,
+\varphi}$, we get that
 \begin{equation}
     \label{hamiltonian-on-general-state}
     \begin{aligned}
@@ -1029,10 +1017,9 @@ From (\ref{hamiltonian-on-general-state}), we can deduce that
 \end{equation}
 
 \paragraph{Note: }
-The relative phase of $R_z(\omega t)$ and $U(t)$ are equal.
-\\\noindent
-From the previous results, we can express an arbitrary rotation matrix $R_{\vec{m}}$
-up to a global phase.
+The relative phase of $R_z(\omega t)$ and $U(t)$ are equal. \\\noindent From the
+previous results, we can express an arbitrary rotation matrix $R_{\vec{m}}$ up
+to a global phase.
 
 \begin{equation}
     \begin{aligned}
@@ -1048,13 +1035,15 @@ up to a global phase.
 
 \section{Density matrix and density operator}
 
-Until this part, we were using pure state, i.e. states $\ket{\psi} \in \mathscr{H}$.
-In this part, we will study convexe mixtures/ensembles of pure states, denoted by
+Until this part, we were using pure state, i.e. states $\ket{\psi} \in
+\mathscr{H}$. In this part, we will study convexe mixtures/ensembles of pure
+states, denoted by
 \begin{equation}
     \{p_i, \ket{\psi_i}\}_i
 \end{equation}
-It corresponds to a set of states $\ket{\psi_i}$ that are associated to a probability $p_i$.
-The density operator for the system is defined by the equation
+It corresponds to a set of states $\ket{\psi_i}$ that are associated to a
+probability $p_i$. The density operator for the system is defined by the
+equation
 \begin{equation}
     \label{def-density-matrix}
     \rho \equiv \sum_ip_i\underbrace{\ket{\psi_i}\bra{\psi_i}}_{\text{density matrix}}
@@ -1073,18 +1062,19 @@ $\rho$:
     \end{aligned}
 \end{equation}
 
-Suppose, for example, that the evolution of a closed quantum system is described by the unitary
-operator $U$. If the system was initially in the state $\ket{\psi_i}$, with probability $p_i$
-then afer the evolution has occured the system will be in the state $U\ket{\psi_i}$ with probability
-$p_i$. Thus, the evolution of the density operator is described by the equation
+Suppose, for example, that the evolution of a closed quantum system is described
+by the unitary operator $U$. If the system was initially in the state
+$\ket{\psi_i}$, with probability $p_i$ then afer the evolution has occured the
+system will be in the state $U\ket{\psi_i}$ with probability $p_i$. Thus, the
+evolution of the density operator is described by the equation
 \begin{equation}
     \rho=\sum_ip_i\ket{\psi_i}\bra{\psi_i} \overset{U}{\longrightarrow}
         \sum_ip_iU\ket{\psi_i}\bra{\psi_i}U^\dagger=U\rho U^\dagger
 \end{equation}
-Generalized measurements are also described with the density operator.
-Suppose we perform a measurement described by the measurements operators
-$\{K_m\}_m$. If the initial state was $\ket{\psi_i}$, then the probability if getting
-result $m$ is
+Generalized measurements are also described with the density operator. Suppose
+we perform a measurement described by the measurements operators $\{K_m\}_m$. If
+the initial state was $\ket{\psi_i}$, then the probability if getting result $m$
+is
 \begin{equation}
     \begin{aligned}
         \mathbbm{P}(m|i)
@@ -1092,9 +1082,10 @@ result $m$ is
             & = \text{tr}(K_m^\dagger K_m\ket{\psi_i}\bra{\psi_i})
     \end{aligned}
 \end{equation}
-We can interpret this formula as the mean value of the operator $K_m$ over the subspace
-associated to $m$, and conclude using (\ref{expectation-value-and-trace}).\\\noindent
-Hence, by the law of total probabilities, the probability of obtaining the result $m$ is
+We can interpret this formula as the mean value of the operator $K_m$ over the
+subspace associated to $m$, and conclude using
+(\ref{expectation-value-and-trace}).\\\noindent Hence, by the law of total
+probabilities, the probability of obtaining the result $m$ is
 \begin{equation}
     \begin{aligned}
         \mathbbm{P}(m)
@@ -1103,7 +1094,8 @@ Hence, by the law of total probabilities, the probability of obtaining the resul
             & = \text{tr }(K_m^\dagger K_m \rho)
     \end{aligned}
 \end{equation}
-If the initial state was $\ket{\psi_i}$ then the state after obtaining the result $m$ is
+If the initial state was $\ket{\psi_i}$ then the state after obtaining the
+result $m$ is
 \begin{equation}
     \ket{\psi_i^m}
         = \frac{K_m\ket{\psi_i}}{\sqrt{\braket{\psi_i|K_m^\dagger K_m|\psi_i}}}
@@ -1115,8 +1107,8 @@ If the initial state was $\ket{\psi_i}$ then the state after obtaining the resul
     \{\big(p, \ket{0}\big), \big(1-p, \ket{1}\big)\}
 \end{equation}
 
-Does it exists a state $\ket{\psi}$ representing this ?
-Recall that for an observable $O$
+Does it exists a state $\ket{\psi}$ representing this ? Recall that for an
+observable $O$
 \begin{equation}
     \braket{O}=\sum_ip_i\braket{\psi_i|O|\psi_i}
 \end{equation}
@@ -1128,44 +1120,53 @@ Then
         \braket{Z}&=p\underbrace{\braket{0|Z|0}}_{=1} + (1-p)\underbrace{\braket{1|Z|1}}_{=-1} = 2p-1
     \end{aligned}
 \end{equation}
-We see that there is no intersection on the sphere. This implies that there is no
-$\ket{\psi}$ representing this mixture.
+We see that there is no intersection on the sphere. This implies that there is
+no $\ket{\psi}$ representing this mixture.
 %TODO: add the sphere.
 
 \subsection{Properties of the density operator}
-In the case of a pure state, a system can be described both by a density operator and
-by a state vector: with (\ref{def-density-matrix}), we can easily see that the states
-$\ket{\psi}$ and $e^{i\varphi}\ket{\psi}$ have the same density operator, hence they describe the same
-physical state. The density operator therefore has the benefit of removing the arbitrary global
-phase of a state, that we saw in section \ref{global-phase} (p.\pageref{global-phase})
-that it was irrelevant.\\
-Other interesting properties of the density operator that come from its definition:
+\label{density-matrix-properties}
+In the case of a pure state, a system can be described both by a density
+operator and by a state vector: with (\ref{def-density-matrix}), we can easily
+see that the states $\ket{\psi}$ and $e^{i\varphi}\ket{\psi}$ have the same
+density operator, hence they describe the same physical state. The density
+operator therefore has the benefit of removing the arbitrary global phase of a
+state, that we saw in section \ref{global-phase} (p.\pageref{global-phase}) that
+it was irrelevant.\\
+Other interesting properties of the density operator that come from its
+definition:
 \begin{itemize}[label=-]
     \item the density operator is hermitian
     \begin{equation}
         \rho = \rho^\dagger
     \end{equation}
-    \item semi definite positive, hence its eigenvalues are greater or equal to zero.
+    \item semi definite positive, hence its eigenvalues are greater or equal to
+    zero.
     \begin{equation}
         \forall \ket{\psi}, \braket{\psi|\rho|\psi} \geq 0
     \end{equation}
     \item tr($\rho$) $\leq 1$
     \item tr($\rho^2$)=tr($\rho$)=1 if and only if the state is pure.
+    \item $\rho$ is diagonalizable, i.e. $\exists \lambda_i \geq 0 : \rho =
+        \sum_i \lambda_i \ket{e_i}\bra{e_i}$. And $\{e_i\}_i$ is the cannonical
+        basis: $\forall i,j: \braket{e_i|e_j}=\delta_{ij}$
 \end{itemize}
 
-To any $\rho$ such that $\rho=\rho^\dagger$, $\rho \geq 0$ and tr($\rho$)=1 corresponds a matrix,
-since $\rho=\rho^\dagger$, there exists a set $\{\ket{\psi_i}\}$ that form a basis such that
+To any $\rho$ such that $\rho=\rho^\dagger$, $\rho \geq 0$ and tr($\rho$)=1
+corresponds a matrix, since $\rho=\rho^\dagger$, there exists a set
+$\{\ket{\psi_i}\}$ that form a basis such that
 $\rho=\sum_i\lambda_i\ket{\psi_i}\bra{\psi_i}$.
 
 
 \subsection{Bloch sphere for mixed states}
 %TODO: add the sketch for the lecture notes.
-Using the def. (\ref{def-vect-m}) of the vector $\vec{m}$ and the def. (\ref{projector-onto-m})
-of the projector onto this vector $\vec{m}$, we have
+Using the def. (\ref{def-vect-m}) of the vector $\vec{m}$ and the def.
+(\ref{projector-onto-m}) of the projector onto this vector $\vec{m}$, we have
 \begin{equation}
     \rho = \sum_ip_i\ket{\vec{m_i}}\bra{\vec{m_i}} = \frac{1}{2}\big(Id+\vec{\sigma}\cdot\sum_ip_i\vec{m_i}\big)
 \end{equation}
-Any measurement on $\rho$ leads to the same statistics independant of the mixture.\\
+Any measurement on $\rho$ leads to the same statistics independant of the
+mixture.\\
 In \texttt{BB84}:
 $
 \frac{1}{2}\ket{0}\bra{0} + \frac{1}{2} \ket{1}\bra{1}
@@ -1174,8 +1175,8 @@ $
 $
 
 \subsection{Composition}
-As seen previouly, the state $\ket{\psi}_{AB} \in \mathscr{H}_A \otimes \mathscr{H}_B$.
-From the fact that
+As seen previouly, the state $\ket{\psi}_{AB} \in \mathscr{H}_A \otimes
+\mathscr{H}_B$. From the fact that
 \begin{equation}
     \ket{\psi'}_{AB} = \sum_{\psi, \phi}\ket{\psi_A}\otimes\ket{\phi_B}
     \neq \Big(\sum_{\psi}\ket{\psi}_A\Big) \otimes \Big(\sum_{\phi}\ket{\phi}_B\Big)
@@ -1190,8 +1191,8 @@ We can see that the density operator for the composition is defined by
 \end{equation}
 
 \paragraph{Criterion to decide if a state is mixed or pure: }
-Let $\rho$ to be in its diagonal form (as $\rho$ hermitian, if not diagonal, it is diagonalizable).
-Then
+Let $\rho$ to be in its diagonal form (as $\rho$ hermitian, if not diagonal, it
+is diagonalizable). Then
 \begin{equation}
     \begin{aligned}
         \text{tr } \rho^2
@@ -1206,23 +1207,26 @@ Then
     \end{aligned}
 \end{equation}
 
-\paragraph{Note: }From that we can express by $1-\text{tr }\rho^2$ the notion of purity of a state.
+\paragraph{Note: }From that we can express by $1-\text{tr }\rho^2$ the notion of
+purity of a state.
 
 \subsection{Partial trace}
-Consider a two physical systems $A \in \mathscr{H}_A$ and $B \in \mathscr{H}_B = \mathscr{H}_{AB}$.
-The space associated to the global system is $\mathscr{H}_A\otimes\mathscr{H}_B$.
-Let $\{\ket{\psi_i}_A\}_i$ be a basis of $A$ and $\{\ket{\psi_i}_B\}_i$ a basis of $B$.
-$\{\ket{\psi_i}_A\ket{\psi_i}_B\}$ is a basis of $\mathscr{H}_{AB}$.
-The density operator $\rho_{AB}$ acts on the whole system. We are going to define, starting form
-$\rho_{AB}$, an operator $\rho_A$ (or $\rho_B$) that acts only on $A$ (or $B$).
+Consider a two physical systems $A \in \mathscr{H}_A$ and $B \in \mathscr{H}_B =
+\mathscr{H}_{AB}$. The space associated to the global system is
+$\mathscr{H}_A\otimes\mathscr{H}_B$. Let $\{\ket{\psi_i}_A\}_i$ be a basis of
+$A$ and $\{\ket{\psi_i}_B\}_i$ a basis of $B$.
+$\{\ket{\psi_i}_A\ket{\psi_i}_B\}$ is a basis of $\mathscr{H}_{AB}$. The density
+operator $\rho_{AB}$ acts on the whole system. We are going to define, starting
+form $\rho_{AB}$, an operator $\rho_A$ (or $\rho_B$) that acts only on $A$ (or
+$B$).
 
 The reduced density operator for the system $A$ is $\rho_A$
 \begin{equation}
     \rho_A \equiv
     \sum_k \bra{\psi_k}_B\rho\ket{\psi_k}_B
 \end{equation}
-$\rho_A$ is obtained from $\rho$ by computing the partial
-trace on the system $B$
+$\rho_A$ is obtained from $\rho$ by computing the partial trace on the system
+$B$
 \begin{equation}
     \rho_A \equiv \text{tr}_B(\rho_{AB})
 \end{equation}
@@ -1239,10 +1243,10 @@ The trace of the state density operator acting on the system $AB$ is then
 
 \section{Tomography}
 \subsection{Case of the qubit}
-We start with $p^{\otimes n}$, that is, $n$ copies of an unknown state $p$.
-We suppose, for simplicity, that all of these states are the same.
-The goal is to write the state $p$, or any complete description of the state
-$p$. The procedure is the following:
+We start with $p^{\otimes n}$, that is, $n$ copies of an unknown state $p$. We
+suppose, for simplicity, that all of these states are the same. The goal is to
+write the state $p$, or any complete description of the state $p$. The procedure
+is the following:
 \begin{enumerate}
     \item Split the $n$ copies of the state into 3 sets of size $\frac{n}{2}$
     \item Measure $X, Y, Z$ on each set
@@ -1259,25 +1263,119 @@ $p$. The procedure is the following:
 \end{enumerate}
 
 \subsubsection*{Exemple of problem}
-%TODO: sketch the state outside the sphere
-%TODO: complete this example
-We could get something like $\braket{X}=\braket{Z}=1$ as outcome of the measurement.
-This is physically impossible but could occur due to bad measurement devices.
+%TODO: sketch the state outside the sphere TODO: complete this example
+We could get something like $\braket{X}=\braket{Z}=1$ as outcome of the
+measurement. This is physically impossible but could occur due to bad
+measurement devices.
 
 \subsection{Tomography of qubits}
+For a system of dimension $d$, it is needed to have a tomographically complete
+set of observables, which is a basis for the matrices verctor space. The inner
+product in a matrices vector space can be defined as
+\begin{equation}
+    \label{def-h-s-inner-product}
+    <A,B> = \text{tr}(A^\dagger B)
+\end{equation}
+and is called the Hilbert-Schmidt inner product.
+\\
+For instance if $d=2$, then we can use the basis $\mathscr{B}=\Big\{\dfrac{I}{\sqrt
+2}, \dfrac{X}{\sqrt 2}, \dfrac{Y}{\sqrt 2}, \dfrac{Z}{\sqrt 2}\Big\}$ where we have
+\begin{equation}
+    \forall \sigma_i, \sigma_j \in \mathscr{B}, <\sigma_i, \sigma_j> = \delta_{ij}
+\end{equation}
+More generally, $\forall d \in \mathbbm{N}$, such a basis can be defined by
+\begin{equation}
+    \mathscr{B} =
+        \underbrace{
+            \big\{\ket{i}\bra{i}\big\}_i^d
+        }_{
+            \text{\Large$\mathbbm{1}_d$}
+        } \cup
+        \underbrace{
+            \big\{\frac{\ket{i}\bra{j} + \ket{j}\bra{i}}{\sqrt 2}\big\}_{i<j}^d\cup
+        }_{
+            \dfrac{1}{\sqrt2}
+            \begin{bmatrix}
+                1 & \cdots & 1 \\
+                \vdots & \ddots & \vdots \\
+                1 & \cdots & 1
+            \end{bmatrix}
+        }
+        \underbrace{
+            \big\{\frac{i\ket{i}\bra{j} - i\ket{j}\bra{i}}{\sqrt 2}\big\}_{i<j}^d
+        }_{
+            \dfrac{i}{\sqrt2}
+            \begin{bmatrix}
+                1 & \cdots & \cdots & 1 \\
+                -1 & \ddots & & \vdots \\
+                \vdots & \ddots & \ddots & 1 \\
+                -1 & \cdots & -1 & 1
+            \end{bmatrix}
+        }
+\end{equation}
+Where $\forall M \in \mathscr{B}, M^\dagger = M$ i.e each matrix of
+$\mathscr{B}$ is hermitian, and $|\mathscr{B}|=d^2$. \\
+The basis of a matrix vector space is indeed an orthonormal basis, then
+\begin{equation}
+    \begin{aligned}
+        \rho
+            & = \sum_{\sigma \in \mathscr{B}} <\sigma, \rho> \cdot \sigma & \\
+            & = \sum_{\sigma \in \mathscr{B}} \text{tr}(\sigma^\dagger \rho) \cdot \sigma
+                & \text{using eq. (\ref{def-h-s-inner-product})} \\
+            & = \sum_{\sigma \in \mathscr{B}} \text{tr}(\sigma \rho) \cdot \sigma
+                & \text{since $\sigma \in \mathscr{B}$ is hermitian} \\
+            & = \sum_{\sigma \in \mathscr{B}}\braket{\sigma}_\rho\cdot \sigma &
+    \end{aligned}
+\end{equation}
+Hence to reconstruct $\rho$ we only need to measure the average
+$\braket{\sigma}_\rho$ for all $\sigma$. Since $|\mathscr{B}|=d^2$ and knowing
+tr($\rho$) = 1, we need $d^2 - 1$ average measurements to reconstruct $\rho$ :
+
+\begin{table}[h]
+\centering
+\begin{tabular}{r|cccc}
+    number of qubits in $\rho$ & 1 & 2 & 3 & 5 \\ \hline
+    average measurements needed & 3 & 15 & 63 & 1023
+\end{tabular}
+\caption{Number of average measurements needed for a n-qubits\\state reconstruction}
+\end{table}
+\noindent
+The number of average measurement grows very fast, hence we need a more clever
+way than \textit{brute force}, like compressed sensing (signal processing
+technique for efficiently acquiring and reconstructing a signal), A.I, etc...
 
 \section{Purification}
 \paragraph{Schmidt decomposition: }
-Suppose $\ket{\psi}_{AB}$ is a pure state of a bipartite system, $AB$. Then there exist
-orthonormal states $\ket{e_i}_A$ for system $A$, and $\ket{e_i}_B$ for system $B$ such
-that
+Suppose $\ket{\psi}_{AB}$ is a pure state of a bipartite system, $AB$. Then
+there exist orthonormal states $\ket{e_i}_A$ for system $A$, and $\ket{e_i}_B$
+for system $B$ such that
 \begin{equation}
     \ket{\psi} = \sum_i\lambda_i \ket{e_i}_A \ket{e_i}_B
 \end{equation}
 where $\lambda_i \in \mathbbm{R^+}$ and are satisfying $\sum_i\lambda_i=1$, and
-$\forall i,j \braket{e_i|e_j}=\delta_{ij}$
+$\forall i,j \braket{e_i|e_j}=\delta_{ij}$.
+%\subsection{Principle of purification}
+\\ \\
+The purification of a given density matrix $\rho$ is the process of getting the
+associated quantum state. In other word it is the converse operation of the
+trace: since given a state $\ket{\psi}_{AB}$, taking the trace of the state
+gives us the density matrix $\rho_{AB}$, purifying the density matrix
+$\rho_{AB}$ gives us the quantum state $\ket{\psi}_{AB}$.\\
+The natural question that comes is: for all density matrix $\rho_A$ does it
+exist a pure state $\ket{\psi}_{AB}$ such that $\text{tr}_B\ket{\psi}_{AB} =
+\rho_B$ ? The answers is yes and the proof follows.
 
+From section (\ref{density-matrix-properties}), any density matrix $\rho_A$ is
+hermitian and semi-definite positive, i.e $\rho_A=\rho^\dagger_A$ and $\rho_A
+\geq 0$, and $\rho_A$ is diagonalizable. From theses properties, one can express
+$\ket{\psi}_{AB}$ in the cannonical basis $\{e_i\}_i$
 
+If dim$\mathscr{H}_B \geq r$ (what is $r$ ?), then the state $\ket{\psi}_{AB}$
+can be written
+\begin{equation}
+    \ket{\psi}_{AB} = \sum_{i=0}^r \sqrt{\lambda_i} \ket{e_i}_A\ket{b_i}_B
+\end{equation}
+where $\{b_i\}_i$ is an orthonormal basis of $\mathscr{H}_B$
 \newpage
 \section{Appendix}
 %TODO: maybe put BB84 (+ B92 ?) and Quantum Teleportation in this part
@@ -1286,23 +1384,22 @@ $\forall i,j \braket{e_i|e_j}=\delta_{ij}$
 \begin{theorem}
     Non-orthogonal states can not be reliably distinguish
 \end{theorem}
-Considering two non-orthogonal states $\ket{\psi_1}$ and $\ket{\psi}$, there exist no quantum measurement that
-can disinguish reliably between those two states, i.e. there can not exist a pair of operators $E_1$, $E_2$
-such that
+Considering two non-orthogonal states $\ket{\psi_1}$ and $\ket{\psi_2}$, there
+exist no quantum measurement that can distinguish reliably between those two
+states, i.e. there can not exist a pair of operators $E_1$, $E_2$ such that
 \begin{equation}
     \braket{\psi_1|E_1|\psi_1} = 1 \quad \braket{\psi_2|E_2|\psi_2} = 1
 \end{equation}
-Since $\sum_iE_i=Id$ it follows that $\sum_i\braket{\psi_1|E_i|\psi_1}=1$, and since
-$\braket{\psi_1|E_1|\psi_1} = 1$ we must have $\braket{\psi_1|E_2  |\psi_1} = 0$
-$\Rightarrow \sqrt{E_2}\ket{\psi_1}=0$.
-\\\noindent
-We can decompose $\ket{\psi_2}$ as
+Since $\sum_iE_i=Id$ it follows that $\sum_i\braket{\psi_1|E_i|\psi_1}=1$, and
+since $\braket{\psi_1|E_1|\psi_1} = 1$ we must have $\braket{\psi_1|E_2
+|\psi_1} = 0$ $\Rightarrow \sqrt{E_2}\ket{\psi_1}=0$. \\\noindent We can
+decompose $\ket{\psi_2}$ as
 \begin{equation}
     \ket{\psi_2} = \alpha\ket{\psi_1}+\beta\ket{\varphi}
 \end{equation}
-where $\braket{\psi_1|\varphi}=0$, $|\alpha|^2 +|\beta|^2 = 1$, and $|\beta|<1$ as
-$\ket{\psi_1}$ and $\ket{\psi_2}$ are not orthogonal.
-Based on our assumption, we have
+where $\braket{\psi_1|\varphi}=0$, $|\alpha|^2 +|\beta|^2 = 1$, and $|\beta|<1$
+as $\ket{\psi_1}$ and $\ket{\psi_2}$ are not orthogonal. Based on our
+assumption, we have
 \begin{equation}
     \begin{aligned}
         \sqrt{E_2}\ket{\psi_1} = 0
@@ -1318,6 +1415,7 @@ where we used
 \begin{equation}
 \braket{\varphi|E_2|\varphi} \leq \sum_i\braket{\varphi|E_i|\varphi} = \braket{\varphi|\varphi} = 1
 \end{equation}
-Therefore our assumption contradicts the property of non-orthonormality of the states $(|\beta|<1)$
-and can not be true. Thus, one can't reliably distinguish non-orthogonal states.
+Therefore our assumption contradicts the property of non-orthonormality of the
+states $(|\beta|<1)$ and can not be true. Thus, one can't reliably distinguish
+non-orthogonal states.
 \end{document}
