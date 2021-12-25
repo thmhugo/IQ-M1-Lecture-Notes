@@ -1376,9 +1376,193 @@ can be written
     \ket{\psi}_{AB} = \sum_{i=0}^r \sqrt{\lambda_i} \ket{e_i}_A\ket{b_i}_B
 \end{equation}
 where $\{b_i\}_i$ is an orthonormal basis of $\mathscr{H}_B$
+
+\section{Entanglement and Bell inequalities}
+
+Consider being in the situation described in Fig. (\ref{fig:sharing-scheme}),
+where to parts \texttt{A} and \texttt{B} are sharing a qubit of the state
+$\ket{\phi^+}=\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$, where \texttt{A}
+makes its measurement with an angle $\alpha$ and \texttt{B} measure
+with an angle $\texttt{$\beta$}$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{bell-ineq-sharing-scheme.png}
+    \caption{State sharing between \texttt{A} and \texttt{B}}
+    \label{fig:sharing-scheme}
+\end{figure}
+\noindent
+The observables related to their own measurement are respectively $Z_\alpha$ and
+$Z_\beta$, hence the observable related to the measurement of the global state
+$\ket{\phi^+}$ is $Z_\alpha \otimes Z_\beta$, where
+\begin{equation}
+    \begin{aligned}
+        \braket{Z_\alpha \otimes Z_\beta}
+            &= \cos \alpha \cos \beta \braket{Z \otimes X} \\
+            &+ \sin \alpha \sin \beta \braket{X \otimes X} \\
+            &+ \cos \alpha \sin \beta \braket{Z \otimes X} \\
+            &+ \sin \alpha \cos \beta \braket{X \otimes Z}
+    \end{aligned}
+\end{equation}
+and
+\begin{itemize}[label=-]
+    \item $\braket{\psi^+|Z \otimes X|\psi^+}$ =
+        $\bra{\psi^+} \frac{1}{\sqrt2}\big(Z \otimes X\ket{00} + Z \otimes X\ket{11}\big)$ =
+        $\bra{\phi^+}\big(\ket{01}-\ket{10}\big)$ = 0
+    \item $Z \otimes Z \ket{00} = \ket{00}$ and $Z \otimes Z \ket{11} = \ket{11}$
+        $\Rightarrow Z \otimes Z \ket{\phi^+} = \ket{\phi^+}$
+        hence $\braket{\psi^+|Z \otimes Z|\psi^+} = 1$
+    \item $X \otimes X \ket{00} = \ket{11}$ and $X \otimes X \ket{11} = \ket{00}$
+    $\Rightarrow X \otimes X \ket{\phi^+} = \ket{\phi^+}$
+    hence $\braket{\psi^+|X \otimes X|\psi^+} = 1$
+    \item $\braket{\psi^+|X \otimes Z|\psi^+}$ =
+    $\bra{\psi^+} \frac{1}{\sqrt2}\big(X \otimes Z\ket{00} + X \otimes Z\ket{11}\big)$ =
+    $\bra{\phi^+}\big(\ket{10}-\ket{01}\big)$ = 0
+\end{itemize}
+hence
+\begin{equation}
+    \braket{Z_\alpha \otimes Z_\beta} =
+        \cos \alpha \cos \beta + \sin \alpha \sin \beta = \cos(\alpha - \beta)
+\end{equation}
+The expectation value of the measurement of the shared state $\phi^+$
+depends only on the difference of the two angle.
+
+\subsection{Local hidden variable theory (LHV)}
+We now consider that a parameter $\lambda$ is associated to the starting state
+$\ket{\phi^+}$, and that this parameter could be used on the measurement of the
+state such that the outcome of \texttt{A}'s and \texttt{B}'s measurements are now
+functions of $\lambda$. Note that no information is sent between \texttt{A} and \texttt{B}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{bell-ineq-sharing-scheme-lhv.jpeg}
+    \caption{}
+\end{figure}
+\subsubsection*{Example of LHV}
+Let $\lambda$ to be an angle, and the measure along $\alpha$ gives as outcome
+$+1 \text{ if } |\lambda - \alpha | < \frac{\Pi}{2}$ and $-1 \text{ if }
+|\lambda - \alpha | \geq \frac{\pi}{2}$.
+Given $\phi^+$ choose $ \lambda \in [0, 2\pi[$ and set
+$\lambda_\texttt{A} = \lambda_\texttt{B} = \lambda$.
+Hence we have
+\begin{equation}
+    \begin{aligned}
+        \braket{Z_\alpha \otimes Z_\beta}_{LHV}
+            & = \int\mathbb{P}(\lambda) \cdot Z_\alpha(\lambda) \cdot Z_\beta(\lambda) d\lambda \\
+            & = \frac{2\big(\pi - |\alpha - \beta|\big) + 2|\alpha-\beta|}{2\pi}
+    \end{aligned}
+\end{equation}
+
+% TODO: add the scheme and be sure of the calculation
+
+\begin{figure}[h]
+    \centering
+    \captionsetup{justification=justified,margin=3cm}
+    \includegraphics[scale=0.6]{lhv-correlation.png}
+    \caption{\quad The realist prediction (solid lines) for\\quantum correlation
+            when there are no non-detections.\\
+            The quantum-mechanical prediction is the dotted curve.}
+\end{figure}
+
+
+\subsubsection*{CHSH test}
+Choose $\alpha_0, \alpha_1, \beta_0, \beta_1$ such that :
+% TODO: add the scheme for the alphas and betas
+
+\begin{equation}
+    \label{def-s-lhv}
+    S = Z_{\alpha_0}Z_{\beta_0}
+        - Z_{\alpha_0}Z_{\beta_1}
+        + Z_{\alpha_1}Z_{\beta_0}
+        + Z_{\alpha_1}Z_{\beta_1}
+\end{equation}
+
+
+\subsubsection*{Classical prediction}
+Let's assume LHV :
+\begin{equation}
+    \braket{S}_{LVH} = \int \mathbb{P}(\lambda)S(\lambda) d\lambda
+\end{equation}
+where, from eq. \ref{def-s-lhv} (\underline{\textbf{note :}}  all $Z$ depends on $\lambda$), we have :
+\begin{equation}
+    S(\lambda)
+        = \underbrace{(Z_{\alpha_0}+Z_{\alpha_1})}_{\oplus}\underbrace{Z_{\beta_0}}_{\pm 1}
+        + \underbrace{(Z_{\alpha_1}-Z_{\alpha_0})}_{\ominus}\underbrace{Z_{\beta_1}}_{\pm 1}
+\end{equation}
+and
+\begin{equation}
+    \begin{aligned}
+        Z_{\alpha_1} = \pm Z_{\alpha_0}
+            & \Rightarrow
+                \begin{cases}
+                    \oplus = 2, \ominus = 0 & \text{ if } Z_{\alpha_1} = Z_{\alpha_0} \\
+                    \oplus = 0, \ominus = 1 & \text{ if } Z_{\alpha_1} = - Z_{\alpha_0} \\
+                \end{cases} \\
+            & \Rightarrow |S(\lambda)| = 2 \\
+            & \Rightarrow -2 \leq \braket{S}_{LHV} \leq 2
+    \end{aligned}
+\end{equation}
+From that we obtain the CHSH Inequality :
+\begin{equation}
+    |\braket{S}_{LVH}| \leq 2 \qquad ; \qquad |\braket{S}_Q| \leq 2\sqrt2
+\end{equation}
+
+\subsection{Theories beyond Q : no-signalling}
+If a state is shared between \texttt{A} and \texttt{B}, no action of \texttt{B}
+changes the measurement statistics of \texttt{A}. Let
+\begin{equation}
+    \ket{\phi^+}_{\texttt{AB}}
+        = \frac{1}{\sqrt2}(\ket{00} + \ket{11})
+        = \frac{1}{\sqrt2}(\ket{++} + \ket{--})
+\end{equation}
+On the one hand, if Bob measures $Z$
+with the set $\big\{\frac{1}{2}\ket{00}\bra{00},\frac{1}{2}\ket{11}\bra{11}
+\big\}$, then the state of Alice is
+\begin{equation}
+    \rho_{\texttt{A}|\texttt{B}\text{ m.}Z}
+        = \frac{1}{2} \ket{0}\bra{0} + \frac{1}{2}\ket{1}\bra{1}
+\end{equation}On the other hand, if
+Bob measures X with
+$\big\{\frac{1}{2}\ket{++}\bra{++},\frac{1}{2}\ket{--}\bra{--} \big\}$, then
+Alice's state is
+\begin{equation}
+    \rho_{\texttt{A}|\texttt{B}\text{ m.}X}
+        = \frac{1}{2}\ket{+}\bra{+} + \frac{1}{2}\ket{-}\bra{-}
+\end{equation}
+which is the same as the state given that Bob measures $Z$. All of this implies,
+for example, that if Bob measures $Z = 0$, then Alice has the state
+$\ket{0}_\texttt{A}$ w.p. 1.
+\newline \\\noindent
+Let $x, y\in \{0,1\}, a, b\{-1, +1\}$, such that $\forall x, y, a, b :
+\mathbb{P}(a,b|x,y) \geq 0$ and $\forall x, y : \sum_{a,b}\mathbb{P}(a,b|x,y) =
+1$.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{no-signalling.png}
+    \caption{Scheme of the no-signalling setup.}
+\end{figure}
+
+In the case of the no-signalling theory:
+\begin{equation}
+    \mathbb{P}(a|x,y=0) = \mathbb{P}(a|x, y=1) = \sum_b \mathbb{P}(a,b|x,y=0)
+\end{equation}
+Hence, again from eq. \ref{def-s-lhv}
+\begin{equation}
+    |S_{NS}| \leq 4
+\end{equation}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.25]{s-recap.png}
+    \caption{Summary of the presented results}
+\end{figure}
+\newpage
+\section{Entanglement witnesses and entanglement measures}
+
+
 \newpage
 \section{Appendix}
-%TODO: maybe put BB84 (+ B92 ?) and Quantum Teleportation in this part
+% TODO: maybe put BB84 (+ B92 ?) and Quantum Teleportation in this part
 \subsection{Non-orthogonal quantum states}
 \subsubsection*{Distinguish non-orthogonal states}
 \begin{theorem}
