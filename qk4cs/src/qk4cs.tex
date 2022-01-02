@@ -35,7 +35,9 @@ goal}}}{=}}}
   \scalebox{#1}{%
     \renewcommand{\arraystretch}{.7}%
     $\begin{bmatrix}#2\end{bmatrix}$%
-  } }
+  }
+}
+\newcommand{\neswarrow}{\mathrel{\text{$\nearrow$\llap{$\swarrow$}}}}
 
 \title{qk4cs}
 \author{}
@@ -55,6 +57,9 @@ goal}}}{=}}}
 {\huge \bfseries -} \\[0.5cm]
 {\huge \bfseries Quantum Kinematic} \\[4cm]
 \vfill
+
+\includegraphics[scale=0.8]{su.png}
+
 \end{center}
 \end{titlepage}
 
@@ -212,14 +217,11 @@ $T$ is linear.
 \begin{equation}
     T(\alpha\ket{\psi} + \beta\ket{\phi}) = \alpha T(\ket{\psi}) + \beta T(\ket{\phi})
 \end{equation}
-
 $T$ acts like an unitary operator. $T$ corresponds to a complex matrix $U$:
 $T(\ket{\phi}) = U\ket{\phi}$, $U \in \mathbbm{C}^{n \times n}$, such that
 $U^\dagger U= Id$.
-
-In the basis $\{\ket{i}\}_{i=0}^n$,$\braket{T(\ket{\psi})|T(\ket{\psi})} =
-\braket{i|j} = \delta_{i,j}$
-%TODO : add the proof
+In the basis $\{\ket{i}\}_{i=0}^n$, which is the computationnal basis,
+$\braket{T(\ket{\psi})|T(\ket{\psi})} = \braket{i|j} = \delta_{i,j}$
 \\
 \\
 We have :
@@ -241,9 +243,13 @@ Let's build a measurement in basis $\{\ket{b_i}\}_i$
     \mathbbm{P}(i) \eqdef |\braket{i|U|\psi}|^2 \eqgoal |\braket{b_i|\psi}|^2 \quad \forall \psi
 \end{equation}
 We want $\bra{i}U=\bra{b_i} \Leftrightarrow U^\dagger\ket{i} = \ket{b_i}
-\Leftrightarrow U = \sum_i \ket{i}\bra{b_i}$
-% TODO : add the proof
-
+\Leftrightarrow U = \sum_i \ket{i}\bra{b_i}$.
+\\
+\\\noindent Indeed, if  $U = \sum_i \ket{i}\bra{b_i}$ then $U^\dagger = \sum_i
+\ket{b_i}\bra{i}$, that implies $U^\dagger \ket{i} =
+\big(\sum_j\ket{b_j}\underbrace{\bra{j}\big)\ket{i}}_{\delta_{i,j}} = \ket{i}$.
+\\
+\\\noindent
 Is $U$ an unitary ?
 
 \begin{equation}
@@ -301,7 +307,29 @@ state to be separable:
     \alpha\delta = \beta\gamma
 \end{equation}
 
-%TODO : add the part about the partial measurement
+\subsection{Partial measurement}
+\subsubsection*{Case of the 2-qubits state}
+Let $\ket{\psi} = \alpha \ket{00} + \beta \ket{01} + \delta \ket{10} + \gamma
+\ket{11}$. If we consider not the measurement of the two qubits but only the
+measurement of, for this example, the first qubit, the probablilies of having
+$0$ or $1$ as outcome are simply given by:
+\begin{equation}
+    \begin{aligned}
+        \mathbb{P}(\ket{0}) & = |\alpha|^2 + |\beta|^2 \\
+        \mathbb{P}(\ket{1}) & = |\delta|^2 + |\gamma|^2
+    \end{aligned}
+\end{equation}
+We can rewrite $\ket{\psi} = \ket{0}(\alpha \ket{0} + \beta \ket{1}) +
+\ket{1}(\delta \ket{0} + \gamma \ket{1})$, hence we deduce that the final state
+after the measurement is $\frac{\alpha \ket{0} + \beta \ket{1}}{\sqrt{|\alpha|^2
++ |\beta|^2}}$ if the measurement outcome was $\ket{0}$, and
+$\frac{\delta \ket{0} + \gamma \ket{1}}{\sqrt{ |\delta|^2 +
+|\gamma|^2}}$ is the measurement outcome was $\ket{1}$.
+
+As a matter of intution, imagine that we separate both qubits of
+the system by a long distance, then acting on the qubit we measure should not do
+anything on the other, hence we juste need to sum the probabilities.
+
 \subsection{No cloning theorem}
 \begin{theorem}
     There is no unitary $U$ such that $\forall \ket{\psi} \in \mathscr{H},
@@ -487,7 +515,7 @@ $B$ through the standard deviations $\Delta A$ and $\Delta B$, and the states
 that, for any state $\ket{\psi}$ and any observable $A$ and $B$
 
 \begin{equation}
-    \Delta A \Delta B \geq \frac{1}{2}|\braket{\psi|[A,B]|\psi}
+    \Delta A \Delta B \geq \frac{1}{2}\big|\braket{\psi|[A,B]|\psi}\big|
 \end{equation}
 
 \subsubsection*{Anti-commutator}
@@ -537,15 +565,14 @@ If $K_i := \Pi_i$ then $\sum_i K_i^\dagger K_i = \sum_i \Pi_i^\dagger\Pi_i =
 \sum_i \Pi_i = Id$
 
 \subsubsection*{Example}
-With prob. $P_j$, I measure $\{\Pi_{ij}\}_i \text{ } (\sum_i \Pi_{ij} = Id)$ and
+With probability $p_j$, I measure $\{\Pi_{ij}\}_i \text{ (with } \sum_i \Pi_{ij} = Id)$ and
 I measure $U_j$ on the output state.
-%TODO : add the scheme
-Probability of getting $ij$ :
+The probability of getting $ij$ as measurement outcome is given by:
 \begin{equation}
     \begin{aligned}
         \mathbbm{P}(ij)
-            &= P_j\braket{\psi | \Pi_{ij} U^\dagger U \Pi_{ij} | \psi} \\
-            &= P_j\braket{\psi|\Pi_{ij}|\psi}
+            &= p_j\braket{\psi | \Pi_{ij} U^\dagger U \Pi_{ij} | \psi} \\
+            &= p_j\braket{\psi|\Pi_{ij}|\psi}
     \end{aligned}
 \end{equation}
 \noindent
@@ -553,13 +580,13 @@ And the resulting state is
 $\dfrac{U\Pi_{ij}\ket{\psi}}{\|\Pi_{ij}\ket{\psi}\|^2}$
 
 \noindent
-Let $\{K_{ij} =\sqrt{P_j} U \Pi_{ij}\}_{ij}$, then
+Let $\{K_{ij} =\sqrt{p_j} U \Pi_{ij}\}_{ij}$, then
 \begin{equation}
     \begin{aligned}
         \sum_{ij} K_{ij}^\dagger K_{ij}
-            & = \sum_{ij} P_j \Pi_{ij} U^\dagger U \Pi_{ij} \\
-            & = \sum_j P_j \sum_i \Pi_{ij} \\
-            & = \sum_j P_j \\
+            & = \sum_{ij} p_j \Pi_{ij} U^\dagger U \Pi_{ij} \\
+            & = \sum_j p_j \sum_i \Pi_{ij} \\
+            & = \sum_j p_j \\
             & = Id
     \end{aligned}
 \end{equation}
@@ -741,6 +768,10 @@ Are $\vec{m}$ and $\vec{-m}$ orthogonal ?
 Orthogonal states in the Hilbert space correspond to opposite vectors in the
 Bloch sphere.
 
+\begin{figure}[h]
+    \includegraphics[scale=0.3]{orthogonal-states-bloch-sphere.png}
+    \caption{Example of states in the Bloch sphere.}
+\end{figure}
 %TODO: add the part (and the sketch) about the mixed states
 
 \section{Pauli operators}
@@ -813,7 +844,7 @@ $$
         \begin{aligned}
             \braket{\sigma_x}
                 & = \braket{\theta, \varphi|X|\theta, \varphi} \\
-                & = \Big(\cos\frac{\theta}{2}\bra{0}+e^{i\varphi}\sin\frac{\theta}{2}\bra{1}\Big)
+                & = \Big(\cos\frac{\theta}{2}\bra{0}+e^{-i\varphi}\sin\frac{\theta}{2}\bra{1}\Big)
                     + \underbrace{\Big(\cos\frac{\theta}{2}\ket{1}+e^{i\varphi}\sin\frac{\theta}{2}
                     \ket{0}\Big)}_{=X\ket{\theta, \varphi}} \\
                 & = \cos\frac{\theta}{2}\sin\frac{\theta}{2}
@@ -824,10 +855,17 @@ $$
     \item measure $\sigma_y$ on the state $\ket{\theta, \varphi}$
     \begin{equation}
         \begin{aligned}
-            \braket{\sigma_y} = v
-        \end{aligned}
+            \braket{\sigma_y}
+                & = \Big(\cos\frac{\theta}{2}\bra{0}+e^{-i\varphi}\sin\frac{\theta}{2}\bra{1}\Big)
+                    \Big(-i\ket{0}\bra{1} + i\ket{1}\bra{0}\Big)
+                    \Big(\cos\frac{\theta}{2}\ket{0}+e^{i\varphi}\sin\frac{\theta}{2}\ket{1}\Big) \\
+                & = \Big(-i\cos\frac{\theta}{2}\bra{1}+ie^{-i\varphi}\sin\frac{\theta}{2}\bra{0}\Big)
+                    \Big(\cos\frac{\theta}{2}\ket{0}+e^{i\varphi}\sin\frac{\theta}{2}\ket{1}\Big) \\
+                & = -i \sin\frac{\theta}{2}\cos\frac{\theta}{2}
+                    \underbrace{\big(e^{i\varphi}-e^-{i\varphi}\big)}_{i\sin\varphi} \\
+                & = \sin\theta\sin\varphi = v
+            \end{aligned}
     \end{equation}
-    % Need to do the calculation by hand
 \end{itemize}
 
 
@@ -966,8 +1004,7 @@ $\sigma_{\vec{m}}$ corresponds to a rotation around the $\vec{m}$ axis.
 
 \subsubsection*{Example}
 \begin{equation}
-% TODO rewrite the subscript in a better way.
-\sigma_{\frac{1}{\sqrt{2}}\begin{bmatrix}1\\0\\1\end{bmatrix}} = H = \frac{1}{\sqrt{2}}
+\sigma_{\frac{1}{\sqrt{2}}\Big[\begin{smallmatrix} 1\\0\\1 \end{smallmatrix} \Big]} = H = \frac{1}{\sqrt{2}}
 \colvec{1\\0\\1}
 \end{equation}
 
@@ -1263,7 +1300,8 @@ is the following:
 \end{enumerate}
 
 \subsubsection*{Exemple of problem}
-%TODO: sketch the state outside the sphere TODO: complete this example
+%TODO: sketch the state outside the sphere
+%TODO: complete this example
 We could get something like $\braket{X}=\braket{Z}=1$ as outcome of the
 measurement. This is physically impossible but could occur due to bad
 measurement devices.
@@ -1276,10 +1314,10 @@ product in a matrices vector space can be defined as
     \label{def-h-s-inner-product}
     <A,B> = \text{tr}(A^\dagger B)
 \end{equation}
-and is called the Hilbert-Schmidt inner product.
-\\
-For instance if $d=2$, then we can use the basis $\mathscr{B}=\Big\{\dfrac{I}{\sqrt
-2}, \dfrac{X}{\sqrt 2}, \dfrac{Y}{\sqrt 2}, \dfrac{Z}{\sqrt 2}\Big\}$ where we have
+and is called the Hilbert-Schmidt inner product. \\
+For instance if $d=2$, then we can use the basis
+$\mathscr{B}=\Big\{\dfrac{I}{\sqrt 2}, \dfrac{X}{\sqrt 2}, \dfrac{Y}{\sqrt 2},
+\dfrac{Z}{\sqrt 2}\Big\}$ where we have
 \begin{equation}
     \forall \sigma_i, \sigma_j \in \mathscr{B}, <\sigma_i, \sigma_j> = \delta_{ij}
 \end{equation}
@@ -1370,7 +1408,7 @@ hermitian and semi-definite positive, i.e $\rho_A=\rho^\dagger_A$ and $\rho_A
 \geq 0$, and $\rho_A$ is diagonalizable. From theses properties, one can express
 $\ket{\psi}_{AB}$ in the cannonical basis $\{e_i\}_i$
 
-If dim$\mathscr{H}_B \geq r$ (what is $r$ ?), then the state $\ket{\psi}_{AB}$
+If dim$\mathscr{H}_B \geq r$, then the state $\ket{\psi}_{AB}$
 can be written
 \begin{equation}
     \ket{\psi}_{AB} = \sum_{i=0}^r \sqrt{\lambda_i} \ket{e_i}_A\ket{b_i}_B
@@ -1381,9 +1419,9 @@ where $\{b_i\}_i$ is an orthonormal basis of $\mathscr{H}_B$
 
 Consider being in the situation described in Fig. (\ref{fig:sharing-scheme}),
 where to parts \texttt{A} and \texttt{B} are sharing a qubit of the state
-$\ket{\phi^+}=\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$, where \texttt{A}
-makes its measurement with an angle $\alpha$ and \texttt{B} measure
-with an angle $\texttt{$\beta$}$.
+$\ket{\phi^+}=\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$, where \texttt{A} makes
+its measurement with an angle $\alpha$ and \texttt{B} measure with an angle
+$\texttt{$\beta$}$.
 
 \begin{figure}[h]
     \centering
@@ -1406,17 +1444,17 @@ $\ket{\phi^+}$ is $Z_\alpha \otimes Z_\beta$, where
 \end{equation}
 and
 \begin{itemize}[label=-]
-    \item $\braket{\psi^+|Z \otimes X|\psi^+}$ =
-        $\bra{\psi^+} \frac{1}{\sqrt2}\big(Z \otimes X\ket{00} + Z \otimes X\ket{11}\big)$ =
+    \item $\braket{\psi^+|Z \otimes X|\psi^+}$ = $\bra{\psi^+}
+        \frac{1}{\sqrt2}\big(Z \otimes X\ket{00} + Z \otimes X\ket{11}\big)$ =
         $\bra{\phi^+}\big(\ket{01}-\ket{10}\big)$ = 0
-    \item $Z \otimes Z \ket{00} = \ket{00}$ and $Z \otimes Z \ket{11} = \ket{11}$
-        $\Rightarrow Z \otimes Z \ket{\phi^+} = \ket{\phi^+}$
-        hence $\braket{\psi^+|Z \otimes Z|\psi^+} = 1$
-    \item $X \otimes X \ket{00} = \ket{11}$ and $X \otimes X \ket{11} = \ket{00}$
-    $\Rightarrow X \otimes X \ket{\phi^+} = \ket{\phi^+}$
-    hence $\braket{\psi^+|X \otimes X|\psi^+} = 1$
-    \item $\braket{\psi^+|X \otimes Z|\psi^+}$ =
-    $\bra{\psi^+} \frac{1}{\sqrt2}\big(X \otimes Z\ket{00} + X \otimes Z\ket{11}\big)$ =
+    \item $Z \otimes Z \ket{00} = \ket{00}$ and $Z \otimes Z \ket{11} =
+        \ket{11}$ $\Rightarrow Z \otimes Z \ket{\phi^+} = \ket{\phi^+}$ hence
+        $\braket{\psi^+|Z \otimes Z|\psi^+} = 1$
+    \item $X \otimes X \ket{00} = \ket{11}$ and $X \otimes X \ket{11} =
+    \ket{00}$ $\Rightarrow X \otimes X \ket{\phi^+} = \ket{\phi^+}$ hence
+    $\braket{\psi^+|X \otimes X|\psi^+} = 1$
+    \item $\braket{\psi^+|X \otimes Z|\psi^+}$ = $\bra{\psi^+}
+    \frac{1}{\sqrt2}\big(X \otimes Z\ket{00} + X \otimes Z\ket{11}\big)$ =
     $\bra{\phi^+}\big(\ket{10}-\ket{01}\big)$ = 0
 \end{itemize}
 hence
@@ -1424,14 +1462,15 @@ hence
     \braket{Z_\alpha \otimes Z_\beta} =
         \cos \alpha \cos \beta + \sin \alpha \sin \beta = \cos(\alpha - \beta)
 \end{equation}
-The expectation value of the measurement of the shared state $\phi^+$
-depends only on the difference of the two angle.
+The expectation value of the measurement of the shared state $\phi^+$ depends
+only on the difference of the two angle.
 
 \subsection{Local hidden variable theory (LHV)}
 We now consider that a parameter $\lambda$ is associated to the starting state
 $\ket{\phi^+}$, and that this parameter could be used on the measurement of the
-state such that the outcome of \texttt{A}'s and \texttt{B}'s measurements are now
-functions of $\lambda$. Note that no information is sent between \texttt{A} and \texttt{B}.
+state such that the outcome of \texttt{A}'s and \texttt{B}'s measurements are
+now functions of $\lambda$. Note that no information is sent between \texttt{A}
+and \texttt{B}.
 
 \begin{figure}[h]
     \centering
@@ -1441,10 +1480,9 @@ functions of $\lambda$. Note that no information is sent between \texttt{A} and 
 \subsubsection*{Example of LHV}
 Let $\lambda$ to be an angle, and the measure along $\alpha$ gives as outcome
 $+1 \text{ if } |\lambda - \alpha | < \frac{\Pi}{2}$ and $-1 \text{ if }
-|\lambda - \alpha | \geq \frac{\pi}{2}$.
-Given $\phi^+$ choose $ \lambda \in [0, 2\pi[$ and set
-$\lambda_\texttt{A} = \lambda_\texttt{B} = \lambda$.
-Hence we have
+|\lambda - \alpha | \geq \frac{\pi}{2}$. Given $\phi^+$ choose $ \lambda \in [0,
+2\pi[$ and set $\lambda_\texttt{A} = \lambda_\texttt{B} = \lambda$. Hence we
+have
 \begin{equation}
     \begin{aligned}
         \braket{Z_\alpha \otimes Z_\beta}_{LHV}
@@ -1483,7 +1521,8 @@ Let's assume LHV :
 \begin{equation}
     \braket{S}_{LVH} = \int \mathbb{P}(\lambda)S(\lambda) d\lambda
 \end{equation}
-where, from eq. \ref{def-s-lhv} (\underline{\textbf{note :}}  all $Z$ depends on $\lambda$), we have :
+where, from eq. \ref{def-s-lhv} (\underline{\textbf{note :}}  all $Z$ depends on
+$\lambda$), we have :
 \begin{equation}
     S(\lambda)
         = \underbrace{(Z_{\alpha_0}+Z_{\alpha_1})}_{\oplus}\underbrace{Z_{\beta_0}}_{\pm 1}
@@ -1515,9 +1554,9 @@ changes the measurement statistics of \texttt{A}. Let
         = \frac{1}{\sqrt2}(\ket{00} + \ket{11})
         = \frac{1}{\sqrt2}(\ket{++} + \ket{--})
 \end{equation}
-On the one hand, if Bob measures $Z$
-with the set $\big\{\frac{1}{2}\ket{00}\bra{00},\frac{1}{2}\ket{11}\bra{11}
-\big\}$, then the state of Alice is
+On the one hand, if Bob measures $Z$ with the set
+$\big\{\frac{1}{2}\ket{00}\bra{00},\frac{1}{2}\ket{11}\bra{11} \big\}$, then the
+state of Alice is
 \begin{equation}
     \rho_{\texttt{A}|\texttt{B}\text{ m.}Z}
         = \frac{1}{2} \ket{0}\bra{0} + \frac{1}{2}\ket{1}\bra{1}
@@ -1531,11 +1570,9 @@ Alice's state is
 \end{equation}
 which is the same as the state given that Bob measures $Z$. All of this implies,
 for example, that if Bob measures $Z = 0$, then Alice has the state
-$\ket{0}_\texttt{A}$ w.p. 1.
-\newline \\\noindent
-Let $x, y\in \{0,1\}, a, b\{-1, +1\}$, such that $\forall x, y, a, b :
-\mathbb{P}(a,b|x,y) \geq 0$ and $\forall x, y : \sum_{a,b}\mathbb{P}(a,b|x,y) =
-1$.
+$\ket{0}_\texttt{A}$ w.p. 1. \newline \\\noindent Let $x, y\in \{0,1\}, a,
+b\{-1, +1\}$, such that $\forall x, y, a, b : \mathbb{P}(a,b|x,y) \geq 0$ and
+$\forall x, y : \sum_{a,b}\mathbb{P}(a,b|x,y) = 1$.
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.4]{no-signalling.png}
@@ -1556,10 +1593,288 @@ Hence, again from eq. \ref{def-s-lhv}
     \includegraphics[scale=0.25]{s-recap.png}
     \caption{Summary of the presented results}
 \end{figure}
+
+
 \newpage
 \section{Entanglement witnesses and entanglement measures}
+A much better explanation of entanglement witnesses can be found on the paper of
+D. Bruss https://arxiv.org/pdf/quant-ph/0110078.pdf
+\subsection{Easy case: bipartite entanglement of pure states}
+The question we ask is : given $\ket{\psi}_{AB}$, is it an entangled state ?
+Where an entangled state is a state that is not separable, and, in the case of
+pure states, a separable state is a product state: $\ket{\psi}_{AB} \in SEP$ if
+and only if $\ket{\psi}_{AB} = \ket{\psi}_A \otimes \ket{\psi}_B$.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{space-of-q-states.png}
+    \caption{Space of entangled and separable quantum states.}
+\end{figure}
+\begin{theorem}
+    For all $\ket{\psi}_{AB} : \ket{\psi}_{AB} \in SEP \Leftrightarrow
+    \text{tr}_B[\rho_{AB}]$ is pure.
+\end{theorem}
+\paragraph{Proof: }
+Let $\rho_{AB} = \ket{\psi}_{AB}\bra{\psi}_{AB}$ to be the density matrix of
+$\ket{\psi}_{AB}$.
+\begin{itemize}[label=( $\Rightarrow$ )]
+    \item If $\ket{\psi}_{AB}$ is separable, then $\exists \ket{\psi}_A,
+    \ket{\psi_B}$ such that $\ket{\psi}_{AB} = \ket{\psi}_A\otimes
+    \ket{\psi}_B$, which implies that the trace of $\rho_{AB}$ over $B$ is
+    $\ket{\psi}_A$, which is a pure state :
+    \begin{equation}
+        \text{tr}_B[\rho_{AB}] = \rho_A
+    \end{equation}
+\end{itemize}
+\begin{itemize}[label=( $\Leftarrow$ )]
+    \item tr$_B[\rho_{AB}] = \ket{\psi}_A\bra{\psi}$. Let us write $\rho_{AB}$
+    in a basis where $\ket{\psi}_A$ is the first vector. Let $\{\ket{i}_B\}$ to
+    be a basis of $\mathscr{H}_A$, $\{\ket{j}_B\}$ to be a basis of
+    $\mathscr{H}_B$.
+    \begin{equation}
+        \rho_{AB} = \sum_{i,j,k,l} \rho_{AB}^{ij,kl}\ket{i}_A\ket{j}_B\bra{k}_A\bra{l}_B
+    \end{equation}
+    And the trace over $B$ is :
+    \begin{equation}
+        \begin{aligned}
+            \text{tr}_B[\rho_{AB}]
+                & = \sum_{i,j,k,l,m} \bra{m}_B\rho_{AB}^{ij,kl}\ket{i}_A\ket{j}_B\bra{k}_A\bra{l}_B\ket{m}_B \\
+                & = \sum_{i,k,m} \rho_{AB}^{im,km} \ket{i}_A\bra{k} \\
+                & = \ket{\psi}_A\bra{\psi} \\
+                & = \ket{1}_A\bra{1} \quad \text{, since $\ket{\psi}_A$ is the first vector of the basis.}
+        \end{aligned}
+    \end{equation}
+    $\cdots$ \\
+    Finally, tr$_B[\rho_{AB}]$ is pure $\Rightarrow \rho_{AB} =
+    \ket{\psi}_A\bra{\psi} \otimes \ket{\psi}_B\bra{\psi}$
 
+    If $\text{tr}_B[\rho_{AB}] =
+    \text{tr}\big[\ket{\varphi}_{AB}\bra{\varphi}\big]$, then $\exists U_B$ such
+    that $\ket{\varphi}_{AB} = Id_A \otimes U_B\ket{\psi}_{AB}$. Hence
+    \begin{equation}
+        \text{tr}_B\big[\rho_{AB}\big] = \ket{\psi}_A\bra{\psi} =
+        \text{tr}_B\big[\ket{\psi}_A\ket{1}_B \otimes \bra{1}_B\bra{\psi}_A\big]
+    \end{equation}
+    And
+    \begin{equation}
+        \ket{\psi}_{AB} = Id_A \otimes U_B \big(\ket{\psi}_A \otimes \ket{1}_B\big)
+        = \ket{\psi}_A \otimes \underbrace{U_B\ket{1}_B}_{=\ket{\varphi}_B}
+    \end{equation}
+    Hence $\ket{\psi}_{AB}$ is separable.
+\end{itemize}
+For pure states, all entanglement measures are equivalent, they are monotonous
+functions of $S(\text{tr}_B[\rho_{AB}])$ where $S$ is the entropy of
+entanglement, which is defined as
+\begin{equation}
+    \label{entenglement-entropy}
+    S(\text{tr}_B[\rho_{AB}]) =\sum_i -p_i \log_2 p_i \leq \log_2 \text{dim}\mathscr{H}_A
+\end{equation}
+
+\subsection{Bipartite mixed states}
+We still have the entangled states defined as state that are not separable
+(i.e. not in $SEP$), but in the case of mixed states $SEP \supsetneq PROD$ where
+$PROD$ is the space of product states, i.e there exists mixed states that can not be
+written as product states, but are still separable states.
+The space $SEP$ is now defined as :
+\begin{equation}
+    \label{def-mixed-state-sep}
+    SEP = \big\{\rho_{AB} | \exists \{p_i, \sigma_i, \tau_i\} : \rho_{AB} = \sum_i p_i (\sigma_i \otimes \tau_i)  \big\}
+\end{equation}
+where $\sigma_i$ and $\tau_i$ are density matrices, and $p_i$ is a probability.
+\subsubsection*{Examples of mixed entangled states :}
+\begin{itemize}[label=-]
+    \item $\rho_{AB}^{(1)} =
+    \frac{1}{2}\underbrace{\ket{00}\bra{00}}_{\ket{0}\bra{0}\otimes\ket{0}\bra{0}}
+    +\frac{1}{2}\underbrace{\ket{11}\bra{11}}_{\ket{1}\bra{1}\otimes\ket{1}\bra{1}}
+    \neq\sigma \otimes \tau $ for some $\sigma, \tau$
+    \item $\rho_{AB}^{(2)} = \frac{1}{2} \phi^+ + \frac{1}{2} \phi^-$, where
+    $\phi^\pm$ = $\Biggl[\begin{smallmatrix} 1 & \cdot & \cdot & \pm 1 \\
+       \cdot & \cdot & \cdot & \cdot \\
+       \cdot & \cdot & \cdot & \cdot \\
+       \pm 1 & \cdot & \cdot & 1 \end{smallmatrix} \Biggr]$
+\end{itemize}
+and one can notice that tr$[\rho_{AB}^{(1)}] = $ tr$[\rho_{AB}^{(2)}]$
+%TODO : what does it mean ?
+
+\subsection{Entanglement witnesses}
+Let $W$ to be an entanglement witness, such that $\rho \in SEP \Rightarrow
+W(\rho) \geq 0$. We do not have $W(\rho) \geq 0 \Rightarrow \rho \in SEP$ : if
+we only have $W(\rho) \geq 0$, we do not know is $\rho$ is entangled or separable.
+Hence $W(\rho) < 0 \Rightarrow \rho$ is entangled.
+\\\noindent
+$W$ is often linear in $\rho$ : $W(\rho) = \text{tr}[W\rho]$.
+\subsubsection*{Example of entanglement witness : Bell inequalities}
+The CHSH test is an entanglement witness : $S_{CHSH} \geq 2 \Rightarrow \rho$ is
+entangled. With that one can define $W_{CHSH} = 2 - S_{CHSH}$. By taking Werner
+states, let's use $W_{CHSH}$ on it to see if it's entangled. Recall : A Werner
+state, which is a mixture of Bell state and the identity, is defined as
+\begin{equation}
+    \rho_W(p) = p\cdot\phi^+ + (1-p)\frac{Id}{4}
+\end{equation}
+where $\phi^+ = \ket{\phi^+}\bra{\phi^+}$ and $p\in[0, 1]$. By using the previouly defined
+entanglement witness, and\\\noindent$S_{CHSH}(\rho_W) = p \cdot 2 \sqrt 2 +
+(1-p)0$, we obtain
+\begin{equation}
+    W_{CHSH}(\rho_W)= 2 - p 2\sqrt 2
+\end{equation}
+This implies that if $p>\frac{1}{\sqrt2}$, the state is entangled. In other
+words, any density matrix that is close enough to the identity is separable.
+
+\subsection{Partial transpose}
+The partial transpose is defined as follows :
+\begin{equation}
+    \ket{ij}\bra{kl} \xrightarrow{\Gamma} \ket{kj}\bra{il}
+\end{equation}
+In other words, if $\rho_{AB} = \sum \rho_{ijkl}\ket{ij}\bra{kl}$
+then then partial transpose of $\rho_{AB}$ is
+$\rho_{AB}^\Gamma = \sum \rho_{kjil}\ket{ij}\bra{kl}$.
+The partial transpoe can be seen as the following operation
+on the matrix elements :
+\begin{equation}
+    \begin{bmatrix}
+        \neswarrow & \cdots & \neswarrow \\
+        \vdots & \ddots & \vdots \\
+        \neswarrow & \cdots & \neswarrow \\
+    \end{bmatrix}
+\end{equation}
+Where $\neswarrow$ acts on the two by two inner matrices of the main matrix as
+follow :
+\begin{equation}
+    \neswarrow \quad :
+    \begin{bmatrix}
+        \alpha & \beta \\ \gamma & \delta
+    \end{bmatrix}
+    \xrightarrow{\hspace*{0.5cm}}
+    \begin{bmatrix}
+        \alpha & \gamma \\ \beta & \delta
+    \end{bmatrix}
+\end{equation}
+Hence we see that the partial transpose conserve the trace, since the diagonal
+stays the same, but the eigenvalues are changes.
+
+\subsubsection*{Exemple 1}
+\begin{equation}
+    \phi^- = \frac{1}{2}\begin{bmatrix}
+        1 & 0 & 0 &-1 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+       -1 & 0 & 0 & 1
+    \end{bmatrix}
+    \xrightarrow{\hspace*{0.5cm}\Gamma\hspace*{0.5cm}}
+    \phi^{-\Gamma} = \frac{1}{2}\begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & 0 & -1 & 0 \\
+        0 & -1 & 0 & 0 \\
+        0 & 0 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+Where the \textit{central} elements of the partial transpose
+can be recognized as being $-\sigma_x$. And the eigenvalues of
+$\phi^{-\Gamma}$ are
+$Sp(\phi^{-\Gamma})=[\frac{1}{2},\frac{1}{2},\frac{1}{2},-\frac{1}{2}]$.
+The sum of the four eigenvalues is indeed 1, but there are three probabilities
+of $\frac{1}{2}$, and one of $-\frac{1}{2}$ which does not make sense. Hence
+the state is entangled.
+
+\subsubsection*{Example 2}
+Let $\rho_W = p\cdot\phi^+ + (1-p) \frac{Id}{4}$ where
+$\phi^+ = \ket{\phi^+} \bra{\phi^+}$ and $p\in [0, 1]$, it's a Werner state.
+
+\begin{equation}
+    \rho_W =
+    \begin{bmatrix}
+        \frac{1+p}{4} & 0 & 0 & \frac{p}{2} \\
+        0 & \frac{1-p}{4} & 0 & 0 \\
+        0 & 0 & \frac{1-p}{4} & 0 \\
+        \frac{p}{2} & 0 & 0 & \frac{1+p}{4}
+    \end{bmatrix}
+    \quad
+    \Rightarrow
+    \quad
+    \rho_W^\Gamma =
+    \begin{bmatrix}
+        \frac{1+p}{4} & 0 & 0 & 0 \\
+        0 & \frac{1-p}{4} & \frac{p}{2} & 0 \\
+        0 & \frac{p}{2} & \frac{1-p}{4} & 0 \\
+        0 & 0 & 0 & \frac{1+p}{4}
+    \end{bmatrix}
+\end{equation}
+We easily get two of the four eigenvalues, that are, $\frac{1+p}{2}$.
+In order to get the two others, we just caculate
+\begin{equation}
+    \begin{aligned}
+        &\text{det }\Big[\begin{smallmatrix}
+            \frac{1-p}{4} - \lambda & \frac{p}{2} \\
+            \frac{p}{2} & \frac{1-p}{4} - \lambda
+        \end{smallmatrix}\Big]
+             = 0\\
+        \Rightarrow
+            & \big(\frac{1-p}{4}-\lambda\big)^2
+            = \Big(\frac{p}{2}\Big)^2\\
+        \Rightarrow
+            & \frac{1-p}{4}-\lambda = \pm \frac{p}{2} \\
+        \Rightarrow
+            & \begin{cases}
+                \lambda_+ = \frac{1+p}{4}\\
+                \lambda_- = \frac{1-3p}{4} \\
+            \end{cases}
+    \end{aligned}
+\end{equation}
+hence the two other eigenvalues are $ \lambda_+ = \frac{1+p}{4}$ and $\lambda_-
+= \frac{1-3p}{4} $. And $\lambda_- = \frac{1-3p}{4} < 0 \Rightarrow p >
+\frac{1}{3}$.
+This implies that $\rho_W$ is entangled if $p>\frac{1}{3}$.
+
+\paragraph{Note :} The partial transpose is a positive map but not a completely
+positive map. A map $f: \rho \mapsto f(\rho)$ is completely positive if and only if
+$(f \otimes Id)(\rho_{AB}) \geq 0$ if $\rho_{AB} \geq 0$. Since $\rho_{AB}$ is
+a density matrix then it is a positive semi-definite hermitian matrix.
+But as we saw $\rho_{AB}^\Gamma$ does not always has positive eigenvalues, and
+since is $\rho_{AB}^\Gamma$ symmetric in the example, $\rho_{AB}^\Gamma$ is not
+always positive definite.
+
+\subsection{Entanglement measure}
+Let $E$ be an entanglement measure :
+\begin{equation}
+    \begin{aligned}
+        \forall \rho \quad
+            & E(\rho) \in \mathbb{R}^+\\
+        \forall \varphi \in SEP \quad
+            & E(\varphi) = 0
+    \end{aligned}
+\end{equation}
+$E$ is \textit{entanglement monotone}, that means $E$ can't increase
+entanglement. Let \texttt{LOOC} to be a Local Operation and Classical
+Communication. If $\rho \xrightarrow{\texttt{LOOC}} \sigma $ then $E(\rho) \geq
+E(\sigma)$.
+
+\subsubsection*{Example of entanglement monotone}
+Let $\mathscr{N}$ be the negativity : based on the partial transpose, it is the
+sum of the negative eigenvalues. If $Sp(\rho_{AB}^\Gamma) = \{\lambda_i\}_i$ then
+\begin{equation}
+    \begin{aligned}
+        \mathscr{N}(\rho_{AB}^\Gamma)
+            & = \sum_{\lambda_i \leq 0}\lambda_i \\
+            & = \sum_{\lambda_i \leq 0} |\lambda_i| +
+                \sum_{\lambda_i > 0} \frac{ |\lambda_i| - \lambda_i}{2} \\
+            & = \sum_{\lambda_i} \frac{ |\lambda_i| - \lambda_i}{2} \\
+            & = \frac{||\rho_{AB}^\Gamma||_1 - 1 }{2} & \text{ since tr$[\rho_{AB}^\Gamma]$ = tr$[\rho_{AB}] = 1$} \\
+    \end{aligned}
+\end{equation}
+
+And $||\rho_{AB}^\Gamma||_1 = \sum_i |\lambda_i| = \text{tr}[\rho] =\text{tr}\big[\sqrt{\rho + \rho}\big]$
+
+\subsubsection{Log-Negativity}
+The log-negativity is defined as
+\begin{equation}
+    E_{\mathscr{N}} = \log ||\rho_{AB}^\Gamma||_1 =
+    \begin{cases}
+        0 & \text{for all states with positive partial transpose}\\
+        > 0 & \text{else}
+    \end{cases}
+\end{equation}
+$E_{\mathscr{N}}$ is additive and it is an upper bound on the
+entangled entropy which is defined in eq. (\ref{entenglement-entropy}).
 \newpage
 \section{Appendix}
 % TODO: maybe put BB84 (+ B92 ?) and Quantum Teleportation in this part
@@ -1575,9 +1890,9 @@ states, i.e. there can not exist a pair of operators $E_1$, $E_2$ such that
     \braket{\psi_1|E_1|\psi_1} = 1 \quad \braket{\psi_2|E_2|\psi_2} = 1
 \end{equation}
 Since $\sum_iE_i=Id$ it follows that $\sum_i\braket{\psi_1|E_i|\psi_1}=1$, and
-since $\braket{\psi_1|E_1|\psi_1} = 1$ we must have $\braket{\psi_1|E_2
-|\psi_1} = 0$ $\Rightarrow \sqrt{E_2}\ket{\psi_1}=0$. \\\noindent We can
-decompose $\ket{\psi_2}$ as
+since $\braket{\psi_1|E_1|\psi_1} = 1$ we must have $\braket{\psi_1|E_2 |\psi_1}
+= 0$ $\Rightarrow \sqrt{E_2}\ket{\psi_1}=0$. \\\noindent
+We can decompose $\ket{\psi_2}$ as
 \begin{equation}
     \ket{\psi_2} = \alpha\ket{\psi_1}+\beta\ket{\varphi}
 \end{equation}
